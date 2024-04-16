@@ -26,6 +26,7 @@
       height: 100%;
       position: relative;
       background-position: center;
+      scroll-snap-align: start;
     }
 
     .content {
@@ -102,18 +103,25 @@
       }
     }
 
-    .nav {
+    .nav-hero {
       position: absolute;
       top: 2.4%;
       right: 5%;
+      z-index: 100;
     }
 
     .nav-item {
       font-family: "Signwood", sans-serif;
       font-size: 2.5em;
+      padding: 0px 15px;
+      margin: 10px 0px 0;
+      transition: all 200ms ease-out;
+      display: inline-block;
+      line-height: 0.5;
+    }
+
+    .nav-hero .nav-item {
       color: white;
-      padding: 0;
-      margin: 10px 20px 0;
       /* Hacky Border Workaround */
       text-shadow:
         3px 0px 0 #006CCF,
@@ -126,37 +134,61 @@
         -1px 3px 0 #006CCF,
         -2px 3px 0 #006CCF,
         -3px 3px 0 #006CCF;
-      transition: all 200ms ease-out;
       border-bottom: 0px solid white;
-      display: inline-block;
-      line-height: 0.5;
       -webkit-transition: all 200ms ease-out;
     }
 
-    .nav-item:hover {
+    .nav-hero .nav-item:hover {
       border-bottom: 10px solid white;
     }
 
-    .nav-item:active {
+    .nav-hero .nav-item:active {
       -webkit-transform: translateY(4px);
       transform: translateY(4px);
     }
 
-    .nav-select {
-      /* Hacky Border Workaround */
-      text-shadow:
-        3px 0px 0 #006CCF,
-        3px 1px 0 #006CCF,
-        3px 2px 0 #006CCF,
-        3px 3px 0 #006CCF,
-        2px 3px 0 #006CCF,
-        1px 3px 0 #006CCF,
-        0px 3px 0 #006CCF,
-        -1px 3px 0 #006CCF,
-        -2px 3px 0 #006CCF,
-        -3px 3px 0 #006CCF;
+    .nav-hero .nav-select {
       display: inline-block;
       border-bottom: 10px solid white;
+      line-height: 0.5;
+    }
+
+    .about {
+      scroll-snap-align: start;
+      background: white;
+      height: 100%;
+      position: relative;
+      background-position: center;
+      scroll-snap-align: start;
+    }
+
+    .nav {
+      position: absolute;
+      top: 2.4%;
+      right: 5%;
+      z-index: 100;
+    }
+
+    .nav .nav-item {
+      color: black;
+      border-bottom: 10px solid #FFD253;
+      -webkit-transition: all 200ms ease-out;
+    }
+
+    .nav .nav-item:hover {
+      border-bottom: 10px solid #75CDFF;
+      -webkit-transform: translateY(-4px);
+      transform: translateY(-4px);
+    }
+
+    .nav .nav-item:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+
+    .nav .nav-select {
+      border-bottom: 10px solid #75CDFF;
+      display: inline-block;
       line-height: 0.5;
     }
 
@@ -166,17 +198,20 @@
       margin: 0;
       overflow-x: hidden;
     }
+
+    body {
+      scroll-snap-type: y mandatory;
+    }
   </style>
 </head>
 
 <body>
+  <div class="navbar nav-hero">
+    <a class="nav-item nav-select">Home</a>
+    <a class="nav-item">About</a>
+    <a class="nav-item">Support</a>
+  </div>
   <div class="hero">
-    <div class="nav">
-      <!-- We use a Three-per-em space here to get the underline to expand past the word -->
-      <a class="nav-item nav-select"> Home </a>
-      <a class="nav-item"> About </a>
-      <a class="nav-item"> Support </a>
-    </div>
     <div class="content">
       <div class="title">ROBOZONE</div>
       <div class="desc">Interactive courses teaching students engineering, computer science, and robotics principles.
@@ -186,6 +221,12 @@
     <img src="/images/cloud.png" class="cloud" />
     <img src="/images/cloud_long.png" class="cloud-long" />
   </div>
+  <div class="about">
+    stuff
+  </div>
+  <script>
+    import createScrollSnap from 'scroll-snap';
+  </script>
 </body>
 
 </html>
