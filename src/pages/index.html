@@ -1,0 +1,191 @@
+<html>
+
+<head>
+  <style>
+    @font-face {
+      font-family: "Signwood";
+      src: url("/fonts/Signwood.ttf"), url("/fonts/SignwoodItalic.ttf");
+    }
+
+    .title {
+      font-family: "Signwood", sans-serif;
+      font-style: italic;
+      font-size: 10em;
+      text-shadow: 7px 10px 0px black;
+    }
+
+    .desc {
+      font-family: "Signwood", sans-serif;
+      font-size: 2em;
+      text-align: center;
+    }
+
+    .hero {
+      background: rgb(117, 205, 255);
+      background: linear-gradient(0deg, rgba(117, 205, 255, 1) 0%, rgba(0, 108, 207, 1) 100%);
+      height: 100%;
+      position: relative;
+      background-position: center;
+    }
+
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      height: 100%;
+    }
+
+    .btn {
+      font-family: "Signwood", sans-serif;
+      font-size: 3em;
+      font-style: italic;
+      padding: 12px 55px;
+      border-radius: 0px;
+      background: white;
+      border: none;
+      margin-top: 20px;
+      box-shadow: 9px 9px 0px black;
+      transition: 300ms;
+    }
+
+    .btn:hover {
+      box-shadow: 14px 14px 0px black;
+      -webkit-transform: translateY(-4px);
+      -webkit-transform: translateX(-4px);
+      transform: translateY(-4px);
+      transform: translateX(-4px);
+    }
+
+    .btn:active {
+      box-shadow: 4px 4px 0px black;
+      -webkit-transform: translateY(4px);
+      -webkit-transform: translateX(4px);
+      transform: translateY(4px);
+      transform: translateX(4px);
+    }
+
+    @keyframes float {
+      from {
+        left: -25%;
+      }
+
+      to {
+        left: 100%;
+      }
+    }
+
+    .cloud {
+      position: absolute;
+      top: 25px;
+      left: -25%;
+      width: 25%;
+      animation: 30s linear -5s infinite float;
+    }
+
+    .cloud-long {
+      position: absolute;
+      bottom: 50px;
+      left: -25%;
+      width: 25%;
+      animation: 30s linear 0s infinite float;
+    }
+
+    @keyframes wipe-in-up {
+      from {
+        clip-path: inset(100% 0 0 0);
+      }
+
+      to {
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    .nav {
+      position: absolute;
+      top: 2.4%;
+      right: 5%;
+    }
+
+    .nav-item {
+      font-family: "Signwood", sans-serif;
+      font-size: 2.5em;
+      color: white;
+      padding: 0;
+      margin: 10px 20px 0;
+      /* Hacky Border Workaround */
+      text-shadow:
+        3px 0px 0 #006CCF,
+        3px 1px 0 #006CCF,
+        3px 2px 0 #006CCF,
+        3px 3px 0 #006CCF,
+        2px 3px 0 #006CCF,
+        1px 3px 0 #006CCF,
+        0px 3px 0 #006CCF,
+        -1px 3px 0 #006CCF,
+        -2px 3px 0 #006CCF,
+        -3px 3px 0 #006CCF;
+      transition: all 200ms ease-out;
+      border-bottom: 0px solid white;
+      display: inline-block;
+      line-height: 0.5;
+      -webkit-transition: all 200ms ease-out;
+    }
+
+    .nav-item:hover {
+      border-bottom: 10px solid white;
+    }
+
+    .nav-item:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+
+    .nav-select {
+      /* Hacky Border Workaround */
+      text-shadow:
+        3px 0px 0 #006CCF,
+        3px 1px 0 #006CCF,
+        3px 2px 0 #006CCF,
+        3px 3px 0 #006CCF,
+        2px 3px 0 #006CCF,
+        1px 3px 0 #006CCF,
+        0px 3px 0 #006CCF,
+        -1px 3px 0 #006CCF,
+        -2px 3px 0 #006CCF,
+        -3px 3px 0 #006CCF;
+      display: inline-block;
+      border-bottom: 10px solid white;
+      line-height: 0.5;
+    }
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hero">
+    <div class="nav">
+      <!-- We use a Three-per-em space here to get the underline to expand past the word -->
+      <a class="nav-item nav-select"> Home </a>
+      <a class="nav-item"> About </a>
+      <a class="nav-item"> Support </a>
+    </div>
+    <div class="content">
+      <div class="title">ROBOZONE</div>
+      <div class="desc">Interactive courses teaching students engineering, computer science, and robotics principles.
+      </div>
+      <button class="btn">SIGN UP</button>
+    </div>
+    <img src="/images/cloud.png" class="cloud" />
+    <img src="/images/cloud_long.png" class="cloud-long" />
+  </div>
+</body>
+
+</html>
