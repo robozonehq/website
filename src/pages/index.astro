@@ -1,5 +1,7 @@
+---
+import '@fontsource/commissioner';
+---
 <html>
-
 <head>
   <style>
     @font-face {
@@ -197,6 +199,31 @@
       overflow-x: hidden;
     }
 
+    .section {
+      display: flex;
+      justify-content: center;
+      align-items: left;
+      flex-direction: column;
+      height: 100%;
+      margin-left: 100px;
+    }
+
+    .header {
+      font-family: "Signwood", sans-serif;
+      font-style: italic;
+      font-size: 5em;
+      line-height: 0;
+      margin: 0 0 50px;
+      border-bottom: 0.5em solid #75CDFF;
+      width: fit-content;
+    }
+
+    .para {
+      font-family: "Commissioner", sans-serif;
+      width: 40%;
+      font-size: 1.5em;
+    }
+
   </style>
 </head>
 
@@ -217,18 +244,38 @@
     <img src="/images/cloud_long.png" class="cloud-long" />
   </div>
   <div class="about-section">
-    stuff
+    <div class="section">
+      <div class="header">What is RoboZone?</div>
+      <div class="para">
+        RoboZone is an organization  dedicated to teaching students important computer science, engineering, and robotics principles. Over 4 weeks, we use interactive projects to teach kids the fundamentals, and then give them 4 weeks to create a robot (add something else here)
+      </div>
+    </div>
   </div>
+
+  <!-- JavaScript -->
   <script>
     import createScrollSnap from 'scroll-snap';
     const element = document.body;
     const home = document.querySelector(".home");
     const about = document.querySelector(".about");
+    const hero = document.querySelector('.hero'); 
+    const aboutSection = document.querySelector(".about-section");
+    const navbar = document.querySelector('.navbar'); 
 
+    const navHero = () => {
+      navbar.classList.add("nav-hero");
+      navbar.classList.remove("nav");
+      document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
+      home.classList.add("nav-select");
+    };
+    const navAbout = () => {
+        navbar.classList.add("nav");
+        navbar.classList.remove("nav-hero");
+        document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
+        about.classList.add("nav-select");
+    };
     const navUpdate = () => {
-      const hero = document.querySelector('.hero'); 
-      const navbar = document.querySelector('.navbar'); 
-       
+      console.log("update");
       const herorect = hero.getBoundingClientRect(); 
       const navrect = navbar.getBoundingClientRect(); 
        
@@ -237,17 +284,13 @@
             herorect.bottom < navrect.top ||  
             herorect.top > navrect.bottom)) { 
         // Hero page
-        navbar.classList.add("nav-hero");
-        navbar.classList.remove("nav");
-        document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-        home.classList.add("nav-select");
+        navHero();
       } else { 
-        navbar.classList.add("nav");
-        navbar.classList.remove("nav-hero");
-        document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-        about.classList.add("nav-select");
+        // About page
+        navAbout();
       }
     };
+
 
     home.addEventListener("click", () => {
       document.querySelector(".hero").scrollIntoView({ behavior: "smooth" });
@@ -256,7 +299,7 @@
 
     about.addEventListener("click", () => {
       document.querySelector(".about-section").scrollIntoView({ behavior: "smooth" });
-      navUpdate();
+      navAbout();
     });
 
     // Scroll snapper
@@ -268,7 +311,7 @@
       threshold: 0.2,
       snapStop: false,
     }, () => {
-      navUpdate();  
+      navUpdate();
     });
   </script>
 </body>
