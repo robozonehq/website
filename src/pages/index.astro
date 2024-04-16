@@ -224,13 +224,13 @@
     const home = document.querySelector(".home");
     const about = document.querySelector(".about");
 
-    home.onclick = () => {
+    home.addEventListener("click", () => {
       document.querySelector(".hero").scrollIntoView({ behavior: "smooth" });
-    };
+    });
 
-    about.onclick = () => {
+    about.addEventListener("click", () => {
       document.querySelector(".about-section").scrollIntoView({ behavior: "smooth" });
-    };
+    });
 
     // Scroll snapper
     const { bind, unbind } = createScrollSnap(element, {
