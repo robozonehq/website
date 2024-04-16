@@ -221,7 +221,18 @@
   <script>
     import createScrollSnap from 'scroll-snap';
     const element = document.body;
+    const home = document.querySelector(".home");
+    const about = document.querySelector(".about");
 
+    home.onclick = () => {
+      document.querySelector(".hero").scrollIntoView({ behavior: "smooth" });
+    };
+
+    about.onclick = () => {
+      document.querySelector(".about-section").scrollIntoView({ behavior: "smooth" });
+    };
+
+    // Scroll snapper
     const { bind, unbind } = createScrollSnap(element, {
       snapDestinationX: '0%',
       snapDestinationY: '100%',
@@ -245,12 +256,12 @@
         navbar.classList.add("nav-hero");
         navbar.classList.remove("nav");
         document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-        document.querySelector(".home").classList.add("nav-select");
+        home.classList.add("nav-select");
       } else { 
         navbar.classList.add("nav");
         navbar.classList.remove("nav-hero");
         document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-        document.querySelector(".about").classList.add("nav-select");
+        about.classList.add("nav-select");
       } 
       });
   </script>
