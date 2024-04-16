@@ -225,24 +225,7 @@
     const home = document.querySelector(".home");
     const about = document.querySelector(".about");
 
-    home.addEventListener("click", () => {
-      document.querySelector(".hero").scrollIntoView({ behavior: "smooth" });
-    });
-
-    about.addEventListener("click", () => {
-      document.querySelector(".about-section").scrollIntoView({ behavior: "smooth" });
-    });
-
-    // Scroll snapper
-    const { bind, unbind } = createScrollSnap(element, {
-      snapDestinationX: '0%',
-      snapDestinationY: '100%',
-      timeout: 100,
-      duration: 300,
-      threshold: 0.2,
-      snapStop: false,
-    }, () => {
-      console.log('snapped');
+    const navUpdate = () => {
       const hero = document.querySelector('.hero'); 
       const navbar = document.querySelector('.navbar'); 
        
@@ -263,8 +246,30 @@
         navbar.classList.remove("nav-hero");
         document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
         about.classList.add("nav-select");
-      } 
-      });
+      }
+    };
+
+    home.addEventListener("click", () => {
+      document.querySelector(".hero").scrollIntoView({ behavior: "smooth" });
+      navUpdate();
+    });
+
+    about.addEventListener("click", () => {
+      document.querySelector(".about-section").scrollIntoView({ behavior: "smooth" });
+      navUpdate();
+    });
+
+    // Scroll snapper
+    const { bind, unbind } = createScrollSnap(element, {
+      snapDestinationX: '0%',
+      snapDestinationY: '100%',
+      timeout: 100,
+      duration: 300,
+      threshold: 0.2,
+      snapStop: false,
+    }, () => {
+      navUpdate();  
+    });
   </script>
 </body>
 
