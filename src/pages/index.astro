@@ -26,7 +26,6 @@
       height: 100%;
       position: relative;
       background-position: center;
-      scroll-snap-align: start;
     }
 
     .content {
@@ -114,7 +113,7 @@
       font-family: "Signwood", sans-serif;
       font-size: 2.5em;
       padding: 0px 15px;
-      margin: 10px 0px 0;
+      margin: 10px 10px 0;
       transition: all 200ms ease-out;
       display: inline-block;
       line-height: 0.5;
@@ -153,13 +152,11 @@
       line-height: 0.5;
     }
 
-    .about {
-      scroll-snap-align: start;
+    .about-section {
       background: white;
       height: 100%;
       position: relative;
       background-position: center;
-      scroll-snap-align: start;
     }
 
     .nav {
@@ -199,17 +196,14 @@
       overflow-x: hidden;
     }
 
-    body {
-      scroll-snap-type: y mandatory;
-    }
   </style>
 </head>
 
 <body>
   <div class="navbar nav-hero">
-    <a class="nav-item nav-select">Home</a>
-    <a class="nav-item">About</a>
-    <a class="nav-item">Support</a>
+    <a class="nav-item nav-select home">Home</a>
+    <a class="nav-item about">About</a>
+    <a class="nav-item support">Support</a>
   </div>
   <div class="hero">
     <div class="content">
@@ -221,11 +215,44 @@
     <img src="/images/cloud.png" class="cloud" />
     <img src="/images/cloud_long.png" class="cloud-long" />
   </div>
-  <div class="about">
+  <div class="about-section">
     stuff
   </div>
   <script>
     import createScrollSnap from 'scroll-snap';
+    const element = document.body;
+
+    const { bind, unbind } = createScrollSnap(element, {
+      snapDestinationX: '0%',
+      snapDestinationY: '100%',
+      timeout: 100,
+      duration: 300,
+      threshold: 0.2,
+      snapStop: false,
+    }, () => {
+      console.log('snapped');
+      const hero = document.querySelector('.hero'); 
+      const navbar = document.querySelector('.navbar'); 
+       
+      const herorect = hero.getBoundingClientRect(); 
+      const navrect = navbar.getBoundingClientRect(); 
+       
+      if (!(herorect.right < navrect.left ||  
+            herorect.left > navrect.right ||  
+            herorect.bottom < navrect.top ||  
+            herorect.top > navrect.bottom)) { 
+        // Hero page
+        navbar.classList.add("nav-hero");
+        navbar.classList.remove("nav");
+        document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
+        document.querySelector(".home").classList.add("nav-select");
+      } else { 
+        navbar.classList.add("nav");
+        navbar.classList.remove("nav-hero");
+        document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
+        document.querySelector(".about").classList.add("nav-select");
+      } 
+      });
   </script>
 </body>
 
