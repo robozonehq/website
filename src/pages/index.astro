@@ -387,6 +387,7 @@ import '@fontsource/commissioner';
     const signup = document.querySelectorAll('.signup');
     const modal = document.querySelector('.modal');
 
+    /* NAVIGATION FUNCTIONS */
     const navHero = () => {
       navbar.classList.add("nav-hero");
       navbar.classList.remove("nav");
@@ -425,11 +426,12 @@ import '@fontsource/commissioner';
         // About page
         navAbout();
       } else {
+        // Support page
         navSupport();
       }
     };
 
-
+    /* EVENT LISTENERS */
     home.addEventListener("click", () => {
       hero.scrollIntoView({ behavior: "smooth" });
       navUpdate();
@@ -445,11 +447,14 @@ import '@fontsource/commissioner';
       navAbout();
     });
 
+    // DO NOT delete ts ignore comments, dialogs are too new for TypeScript.
     signup.forEach((el) => el.addEventListener("click", () => {
+      // @ts-ignore
       modal.showModal();
     }));
 
     document.querySelector(".modal-btn").addEventListener("click", () => {
+      // @ts-ignore
       modal.close();
     });
 
