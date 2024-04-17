@@ -305,19 +305,15 @@ import '@fontsource/commissioner';
     }
 
     .modal {
-      position: fixed;
-      inset: 0px;
       width: 50em;
       height: 25em;
-      max-width: 100vw;
-      max-height: 100dvh;
-      margin: auto;
       padding-top: 50px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       text-align: center;
+      z-index: -1;
     }
 
     .modal-btn {
@@ -333,12 +329,12 @@ import '@fontsource/commissioner';
     <a class="nav-item about">About</a>
     <a class="nav-item support">Support</a>
   </div>
-  <dialog class="modal">
-    <div class="header">Hey there!</div>
-    <div class="para">RoboZone sign ups haven't opened yet. Check again soon!</div>
-    <button class="btn-dark modal-btn">OK</button>
-  </dialog>
   <div class="hero">
+    <dialog class="modal">
+      <div class="header">Hey there!</div>
+      <div class="para">RoboZone sign ups haven't opened yet. Check again soon!</div>
+      <button class="btn-dark modal-btn">OK</button>
+    </dialog>
     <div class="content">
       <div class="title">ROBOZONE</div>
       <div class="desc">Interactive courses teaching students engineering, computer science, and robotics principles.
