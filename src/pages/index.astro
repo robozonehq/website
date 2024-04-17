@@ -279,6 +279,7 @@ import '@fontsource/commissioner';
     }
 
     .sticky-bg {
+      position: -webkit-sticky;
       position: sticky;
       height: 100%;
       bottom: 0;
@@ -302,6 +303,27 @@ import '@fontsource/commissioner';
       bottom: 0;
       transform: rotate(180deg);
     }
+
+    .modal {
+      position: fixed;
+      inset: 0px;
+      width: 50em;
+      height: 25em;
+      max-width: 100vw;
+      max-height: 100dvh;
+      margin: auto;
+      padding-top: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .modal-btn {
+      width: 5em;
+
+    }
   </style>
 </head>
 
@@ -311,12 +333,17 @@ import '@fontsource/commissioner';
     <a class="nav-item about">About</a>
     <a class="nav-item support">Support</a>
   </div>
+  <dialog class="modal">
+    <div class="header">Hey there!</div>
+    <div class="para">RoboZone sign ups haven't opened yet. Check again soon!</div>
+    <button class="btn-dark modal-btn">OK</button>
+  </dialog>
   <div class="hero">
     <div class="content">
       <div class="title">ROBOZONE</div>
       <div class="desc">Interactive courses teaching students engineering, computer science, and robotics principles.
       </div>
-      <button class="btn">SIGN UP</button>
+      <button class="btn signup">SIGN UP</button>
     </div>
     <img src="/images/cloud.png" class="cloud" />
     <img src="/images/cloud_long.png" class="cloud-long" />
@@ -328,7 +355,7 @@ import '@fontsource/commissioner';
         <div class="para">
           RoboZone is an organization dedicated to teaching students important computer science, engineering, and robotics principles. Our 8-week summer course is split into two parts. During the first 4 weeks, students learn basic engineering, robotics, and computer science principles whislt working together in teams and creating a project. In the final 4 weeks, the groups are set against each other in a competition to see which group can use their newfound skills to create the best robot, and win the competition.
         </div>
-        <button class="btn-dark">SIGN UP</button>
+        <button class="btn-dark signup">SIGN UP</button>
       </div>
     </div>
 
@@ -357,6 +384,8 @@ import '@fontsource/commissioner';
     const hero = document.querySelector('.hero'); 
     const aboutSection = document.querySelector(".about-section");
     const navbar = document.querySelector('.navbar'); 
+    const signup = document.querySelectorAll('.signup');
+    const modal = document.querySelector('.modal');
 
     const navHero = () => {
       navbar.classList.add("nav-hero");
@@ -414,6 +443,14 @@ import '@fontsource/commissioner';
     support.addEventListener("click", () => {
       document.querySelector(".support-section").scrollIntoView({ behavior: "smooth" });
       navAbout();
+    });
+
+    signup.forEach((el) => el.addEventListener("click", () => {
+      modal.showModal();
+    }));
+
+    document.querySelector(".modal-btn").addEventListener("click", () => {
+      modal.close();
     });
 
     // Scroll snapper
