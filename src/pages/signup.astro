@@ -1,0 +1,402 @@
+---
+import '@fontsource/commissioner';
+---
+<html>
+<head>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <style>
+    @font-face {
+      font-family: "Signwood";
+      src: url("/fonts/Signwood.ttf"), url("/fonts/SignwoodItalic.ttf");
+    }
+
+    .title {
+      font-family: "Signwood", sans-serif;
+      font-style: italic;
+      font-size: 10em;
+      text-shadow: 7px 10px 0px black;
+      z-index: 50;
+    }
+
+    .desc {
+      font-family: "Signwood", sans-serif;
+      font-size: 2em;
+      text-align: center;
+    }
+
+    .hero {
+      background: rgb(117, 205, 255);
+      background: linear-gradient(0deg, rgba(117, 205, 255, 1) 0%, rgba(0, 108, 207, 1) 100%);
+      height: 100%;
+      position: relative;
+      background-position: center;
+    }
+
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      height: 100%;
+    }
+
+    .btn {
+      font-family: "Signwood", sans-serif;
+      font-size: 3em;
+      font-style: italic;
+      padding: 12px 55px;
+      border-radius: 0px;
+      background: white;
+      border: none;
+      margin-top: 20px;
+      box-shadow: 9px 9px 0px black;
+      transition: 300ms;
+    }
+
+    .btn:hover {
+      box-shadow: 14px 14px 0px black;
+      -webkit-transform: translateY(-4px);
+      -webkit-transform: translateX(-4px);
+      transform: translateY(-4px);
+      transform: translateX(-4px);
+    }
+
+    .btn:active {
+      box-shadow: 4px 4px 0px black;
+      -webkit-transform: translateY(4px);
+      -webkit-transform: translateX(4px);
+      transform: translateY(4px);
+      transform: translateX(4px);
+    }
+
+    @keyframes float {
+      from {
+        left: -25%;
+      }
+
+      to {
+        left: 100%;
+      }
+    }
+
+    .cloud {
+      position: absolute;
+      top: 25px;
+      left: -25%;
+      width: 25%;
+      animation: 30s linear -5s infinite float;
+    }
+
+    .cloud-long {
+      position: absolute;
+      bottom: 50px;
+      left: -25%;
+      width: 25%;
+      animation: 30s linear 0s infinite float;
+    }
+
+    @keyframes wipe-in-up {
+      from {
+        clip-path: inset(100% 0 0 0);
+      }
+
+      to {
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    .nav-hero {
+      position: absolute;
+      top: 2.4%;
+      right: 5%;
+      z-index: 100;
+    }
+
+    .nav-item {
+      font-family: "Signwood", sans-serif;
+      font-size: 2.5em;
+      padding: 0px 15px;
+      margin: 10px 10px 0;
+      transition: all 200ms ease-out;
+      display: inline-block;
+      line-height: 0.5;
+    }
+
+    .nav-hero .nav-item {
+      color: white;
+      /* Hacky Border Workaround */
+      text-shadow:
+        3px 0px 0 #006CCF,
+        3px 1px 0 #006CCF,
+        3px 2px 0 #006CCF,
+        3px 3px 0 #006CCF,
+        2px 3px 0 #006CCF,
+        1px 3px 0 #006CCF,
+        0px 3px 0 #006CCF,
+        -1px 3px 0 #006CCF,
+        -2px 3px 0 #006CCF,
+        -3px 3px 0 #006CCF,
+        -3px 2px 0 #006CCF,
+        -3px 1px 0 #006CCF,
+        -3px 0px 0 #006CCF;
+      border-bottom: 0px solid white;
+      -webkit-transition: all 200ms ease-out;
+    }
+
+    .nav-hero .nav-item:hover {
+      border-bottom: 10px solid white;
+    }
+
+    .nav-hero .nav-item:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+
+    .nav-hero .nav-select {
+      display: inline-block;
+      border-bottom: 10px solid white;
+      line-height: 0.5;
+    }
+
+    .signup {
+      background: white;
+      height: 100%;
+      position: relative;
+      background-position: center;
+      z-index: 200;
+    }
+
+    .support-section {
+      background: white;
+      height: 100%;
+      position: relative;
+      background-position: center;
+    }
+
+    .nav {
+      position: absolute;
+      top: 2.4%;
+      right: 5%;
+      z-index: 100;
+    }
+
+    .nav .nav-item {
+      color: black;
+      border-bottom: 10px solid #FFD253;
+      -webkit-transition: all 200ms ease-out;
+    }
+
+    .nav .nav-item:hover {
+      border-bottom: 10px solid #75CDFF;
+      -webkit-transform: translateY(-4px);
+      transform: translateY(-4px);
+    }
+
+    .nav .nav-item:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+
+    .nav .nav-select {
+      border-bottom: 10px solid #75CDFF;
+      display: inline-block;
+      line-height: 0.5;
+    }
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    .section {
+      display: flex;
+      justify-content: center;
+      align-items: left;
+      flex-direction: column;
+      margin-left: 100px;
+      margin-top: 10%;
+      padding-left: 5%;
+    }
+
+    .header {
+      font-family: "Signwood", sans-serif;
+      font-style: italic;
+      font-size: 5em;
+      line-height: 0;
+      margin: 0 0 50px;
+      border-bottom: 0.5em solid #75CDFF;
+      width: fit-content;
+    }
+
+    .para {
+      font-family: "Commissioner", sans-serif;
+      width: 40%;
+      font-size: 1.5em;
+    }
+
+    .txt {
+        margin-top: 1em;
+        font-family: "Commissioner", sans-serif;
+        width: 40%;
+        font-size: 1.5em;
+    }
+
+    .btn-dark {
+      font-family: "Signwood", sans-serif;
+      font-size: 3em;
+      font-style: italic;
+      padding: 12px 55px;
+      border-radius: 0px;
+      background: black;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      box-shadow: 9px 9px 0px #FFD253;
+      transition: 300ms;
+      width: 6em;
+      z-index: 100;
+    }
+
+    .btn-dark:hover {
+      box-shadow: 14px 14px 0px #FFD253;
+      -webkit-transform: translateY(-4px);
+      -webkit-transform: translateX(-4px);
+      transform: translateY(-4px);
+      transform: translateX(-4px);
+    }
+
+    .btn-dark:active {
+      box-shadow: 4px 4px 0px #FFD253;
+      -webkit-transform: translateY(4px);
+      -webkit-transform: translateX(4px);
+      transform: translateY(4px);
+      transform: translateX(4px);
+    }
+
+    .btn-donate {
+      box-shadow: 9px 9px 0px #79e486;
+    }
+
+    .btn-donate:hover {
+      box-shadow: 14px 14px 0px #79e486;
+    }
+
+    .btn-donate:active {
+      box-shadow: 4px 4px 0px #79e486;
+    }
+
+    .sticky-bg {
+      position: -webkit-sticky;
+      position: sticky;
+      height: 100%;
+      bottom: 0;
+    }
+
+    .corner {
+      position: absolute;
+      width: 12em;
+      height: 12em;
+      background: #FFD253;
+      clip-path: polygon(85% 0, 85% 35%, 35% 35%, 35% 85%, 0 85%, 0 100%, 50% 100%, 50% 50%, 100% 50%, 100% 0);
+    }
+
+    .corner-tl {
+      top: 0;
+      left: 0;
+    }
+
+    .corner-br {
+      right: 0;
+      bottom: 0;
+      transform: rotate(180deg);
+    }
+
+    .modal {
+      width: 50em;
+      height: 25em;
+      padding-top: 50px;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      z-index: -1;
+    }
+
+    .modal-btn {
+      width: 5em;
+
+    }
+
+    .choice {
+        display: flex;
+        flex-direction: row;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div class="navbar nav">
+    <a class="nav-item home">Home</a>
+    <a class="nav-item about">About</a>
+    <a class="nav-item support">Support</a>
+  </div>
+<div class="signup">
+    <div class="section">
+    <div class="header">Sign Up</div>
+    <div class="para">
+        Welcome to our sign ups for RoboZone. This course will take place in July-August Summer 2024 from [3 Hour Time Frame] at [Location].
+    </div>
+    <div class="txt">
+        First Name:
+    </div>
+    <input type="text">	
+    <div class="txt">
+        Last Name:
+    </div>
+    <input type="text">	
+    <div class="txt">
+        What grade will you be entering during the next school year?
+    </div>
+    <fieldset class="txt choice">
+        <div>
+          <input type="radio" id="sixth" name="grade"></input>
+           <label for="sixth">6th Grade</label>
+        </div>
+        <div>
+           <input type="radio" id="seventh" name="grade"></input>
+          <label for="seventh">7th Grade</label>
+        </div>
+        <div>
+            <input type="radio" id="eigth" name="grade"></input>
+            <label for="eigth">8th Grade</label>
+        </div>
+        <div>
+            <input type="radio" id="ninth" name="grade"></input>
+            <label for="ninth">9th Grade</label>
+        </div>
+    </fieldset>
+    <div class="txt">
+        Last Name:
+    </div>
+    <input type="text">	
+
+    <button class="btn-dark signup">SIGN UP</button>
+    </div>
+</div>
+  <div class="sticky-bg">
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-br"></div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+
+  </script>
+</body>
+
+</html>
