@@ -305,23 +305,6 @@ import '@fontsource/commissioner';
       bottom: 0;
       transform: rotate(180deg);
     }
-
-    .modal {
-      width: 50em;
-      height: 25em;
-      padding-top: 50px;
-      display:flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-      z-index: -1;
-    }
-
-    .modal-btn {
-      width: 5em;
-
-    }
   </style>
 </head>
 
@@ -332,11 +315,6 @@ import '@fontsource/commissioner';
     <a class="nav-item support">Support</a>
   </div>
   <div class="hero">
-    <dialog class="modal">
-      <div class="header">Hey there!</div>
-      <div class="para">RoboZone sign ups haven't opened yet. Check again soon!</div>
-      <button class="btn-dark modal-btn">OK</button>
-    </dialog>
     <div class="content">
       <div class="title">ROBOZONE</div>
       <div class="desc">Fun and interactive courses teaching students engineering, computer science, and robotics principles.
@@ -383,7 +361,6 @@ import '@fontsource/commissioner';
     const aboutSection = document.querySelector(".about-section");
     const navbar = document.querySelector('.navbar'); 
     const signup = document.querySelectorAll('.signup');
-    const modal = document.querySelector('.modal');
 
     /* NAVIGATION FUNCTIONS */
     const navHero = () => {
@@ -450,11 +427,6 @@ import '@fontsource/commissioner';
       // @ts-ignore
       modal.showModal();
     }));
-
-    document.querySelector(".modal-btn").addEventListener("click", () => {
-      // @ts-ignore
-      modal.close();
-    });
 
     // Scroll snapper
     createScrollSnap(element, {
