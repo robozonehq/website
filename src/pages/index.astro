@@ -422,12 +422,6 @@ import '@fontsource/commissioner';
       navSupport();
     });
 
-    // DO NOT delete ts ignore comments, dialogs are too new for TypeScript.
-    signup.forEach((el) => el.addEventListener("click", () => {
-      // @ts-ignore
-      modal.showModal();
-    }));
-
     // Scroll snapper
     createScrollSnap(element, {
       snapDestinationX: '0%',

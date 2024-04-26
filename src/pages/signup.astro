@@ -21,7 +21,6 @@ import '@fontsource/commissioner';
     }
 
     .signup {
-      background: white;
       height: 100%;
       position: relative;
       background-position: center;
@@ -93,9 +92,9 @@ import '@fontsource/commissioner';
 
     .txt {
         margin-top: 1em;
-        font-family: "Commissioner", sans-serif;
+        font-family: "Signwood", sans-serif;
         width: 40%;
-        font-size: 1.5em;
+        font-size: 3vh;
     }
 
     .btn-dark {
@@ -128,6 +127,20 @@ import '@fontsource/commissioner';
       -webkit-transform: translateX(4px);
       transform: translateY(4px);
       transform: translateX(4px);
+    }
+
+    .btn-select {
+      background: #FFD253;
+      box-shadow: 9px 9px 0px black;
+      color: black;
+    }
+
+    .btn-select:hover {
+      box-shadow: 14px 14px 0px black;
+    }
+
+    .btn-select:active {
+      box-shadow: 4px 4px 0px black;
     }
 
     .btn-donate {
@@ -171,8 +184,41 @@ import '@fontsource/commissioner';
     .choice {
         display: flex;
         flex-direction: row;
+        width: fit-content;
+        margin: 40px 0;
     }
-    
+
+    [contenteditable] {
+      outline: 0px solid transparent;
+    }
+
+    input[type="radio"] {
+      z-index: 1000;
+      accent-color: #FFD253;
+    }
+    .option {
+      margin: 0 20px;
+      width: fit-content;
+      font-size: 2vw !important;
+      white-space: nowrap;
+    }
+
+    .input {
+      width: 9em;
+      border: none;
+      font-size: 2.6vh;
+      font-family: "Commissioner", sans-serif;
+      color: #777;
+      margin-left: 10px;
+      padding: 15px 0 5px;
+      border-bottom: 0.4rem solid #DDD;
+      transition: all 0.1s ease-in;
+    }
+
+    .input:focus {
+      border: none;
+      border-bottom: 0.6rem solid #FFD253;
+    }
   </style>
 </head>
 
@@ -184,69 +230,53 @@ import '@fontsource/commissioner';
   </div>
 <div class="signup">
     <div class="section">
-    <div class="header">Sign Up</div>
-    <div class="para">
-        Welcome to our sign ups for RoboZone. This course will take place in July-August Summer 2024 from [3 Hour Time Frame] at [Location].
-    </div>
-    <div class="txt">
-        First Name:
-    </div>
-    <input type="text">	
-    <div class="txt">
-        Last Name:
-    </div>
-    <input type="text">	
-    <div class="txt">
-        What grade will you be entering during the next school year?
-    </div>
-    <fieldset class="txt choice">
-        <div>
-          <input type="radio" id="sixth" name="grade"></input>
-           <label for="sixth">6th Grade</label>
-        </div>
-        <div>
-           <input type="radio" id="seventh" name="grade"></input>
-          <label for="seventh">7th Grade</label>
-        </div>
-        <div>
-            <input type="radio" id="eigth" name="grade"></input>
-            <label for="eigth">8th Grade</label>
-        </div>
-        <div>
-            <input type="radio" id="ninth" name="grade"></input>
-            <label for="ninth">9th Grade</label>
-        </div>
-    </fieldset>
-    <div class="txt">
-        Student Email:
-    </div>
-    <input type="text">	
-    <div class="txt">
-        Parent/Guardian 1 First Name:
-    </div>
-    <input type="text">	
-    <div class="txt">
-        Parent/Guardian 1 Last Name:
-    </div>
-    <input type="text">	
-    <div class="txt">
-        Parent/Guardian 1 Email:
-    </div>
-    <input type="text">	
-    <div class="txt">
-        Parent/Guardian 2 First Name:
-    </div>
-    <input type="text">	
-    <div class="txt">
-        Parent/Guardian 2 Last Name:
-    </div>
-    <input type="text">	
-    <div class="txt">
-        Parent/Guardian 2 Email:
-    </div>
-    <input type="text">	
+      <div class="header">Sign Up</div>
+      <div class="para">
+          Welcome to our sign ups for RoboZone. This course will take place in July-August Summer 2024 from [3 Hour Time Frame] at [Location].
+      </div>
+      <div class="txt">
+          First Name:
+      </div>
+      <span class="input" contenteditable></span>
+      <div class="txt">
+          Last Name:
+      </div>
+      <span class="input" contenteditable></span>
+      <div class="txt">
+          What grade will you be entering during the next school year?
+      </div>
+      <div class="txt choice">
+          <div class="btn-dark option">
+            6th Grade
+          </div>
+          <div class="btn-dark option">
+            7th Grade
+          </div>
+          <div class="btn-dark option">
+            8th Grade
+          </div>
+          <div class="btn-dark option">
+            9th Grade
+          </div>
+      </div>
+      <div class="txt">
+          Student Email:
+      </div>
+      <span class="input" contenteditable></span>
+      <div class="txt">
+          Guardian First Name:
+      </div>
+      <span class="input" contenteditable></span>
+      <div class="txt">
+          Guardian Last Name:
+      </div>
+      <span class="input" contenteditable></span>
+      <div class="txt">
+          Guardian Email:
+      </div>
+      <span class="input" contenteditable></span>
 
-    <button class="btn-dark signup">SIGN UP</button>
+      <button class="btn-dark signup">SIGN UP</button>
     </div>
 </div>
   <div class="sticky-bg">
@@ -256,7 +286,15 @@ import '@fontsource/commissioner';
 
   <!-- JavaScript -->
   <script>
-
+    const grades = document.querySelectorAll('.option');
+    let select;
+    
+    grades.forEach((el) => el.addEventListener("click", () => {
+      if (select != null) select.classList.remove("btn-select");
+      el.classList.add("btn-select");
+      select = el;
+      console.log("done");
+    }));
   </script>
 </body>
 
