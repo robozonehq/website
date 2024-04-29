@@ -1,0 +1,22 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules
+    ports:
+      - "8000:8080"
+  pocketbase:
+    build:
+      context: .
+      dockerfile: Dockerfile.pb
+    ports:
+      - "8001:8080"
+    volumes:
+      - ./data:/pb_data

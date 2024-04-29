@@ -1,0 +1,15 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - "8000:8080"
+  pocketbase:
+    build:
+      context: .
+      dockerfile: Dockerfile.pb
+    ports:
+      - "8001:8080"
+    volumes:
+      - ./data:/pb_data

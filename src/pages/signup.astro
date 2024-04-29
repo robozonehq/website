@@ -79,7 +79,7 @@ import '@fontsource/commissioner';
       font-style: italic;
       font-size: 5em;
       line-height: 0;
-      margin: 0 0 50px;
+      margin: 50px 0 50px;
       border-bottom: 0.5em solid #75CDFF;
       width: fit-content;
     }
@@ -87,14 +87,14 @@ import '@fontsource/commissioner';
     .para {
       font-family: "Commissioner", sans-serif;
       width: 40%;
-      font-size: 1.5em;
+      font-size: min(2.6vh, max(2vw, 20px));
     }
 
     .txt {
         margin-top: 1em;
         font-family: "Signwood", sans-serif;
         width: 40%;
-        font-size: 3vh;
+        font-size: min(2.6vh, max(3.5vw, 20px));
     }
 
     .btn-dark {
@@ -184,6 +184,7 @@ import '@fontsource/commissioner';
     .choice {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         width: fit-content;
         margin: 40px 0;
     }
@@ -197,7 +198,7 @@ import '@fontsource/commissioner';
       accent-color: #FFD253;
     }
     .option {
-      margin: 0 20px;
+      margin: 0px 20px 20px;
       width: fit-content;
       font-size: 2vw !important;
       white-space: nowrap;
@@ -237,48 +238,43 @@ import '@fontsource/commissioner';
           Welcome to our sign ups for RoboZone. This course will take place in July-August Summer 2024 from [3 Hour Time Frame] at [Location].
       </div>
       <div class="txt">
-          First Name:
+          Full Name:
       </div>
-      <span class="input" contenteditable></span>
-      <div class="txt">
-          Last Name:
-      </div>
-      <span class="input" contenteditable></span>
+      <span class="input name" contenteditable></span>
       <div class="txt">
           What grade will you be entering during the next school year?
       </div>
       <div class="txt choice">
-          <div class="btn-dark option">
+          <div class="btn-dark option" grade=6>
             6th Grade
           </div>
-          <div class="btn-dark option">
+          <div class="btn-dark option" grade=7>
             7th Grade
           </div>
-          <div class="btn-dark option">
+          <div class="btn-dark option" grade=8>
             8th Grade
           </div>
-          <div class="btn-dark option">
+          <div class="btn-dark option" grade=9>
             9th Grade
           </div>
       </div>
       <div class="txt">
           Student Email:
       </div>
-      <span class="input" contenteditable></span>
+      <span class="input email" contenteditable></span>
       <div class="txt">
-          Guardian First Name:
+          Guardian Full Name:
       </div>
-      <span class="input" contenteditable></span>
-      <div class="txt">
-          Guardian Last Name:
-      </div>
-      <span class="input" contenteditable></span>
+      <span class="input guardian" contenteditable></span>
       <div class="txt">
           Guardian Email:
       </div>
-      <span class="input" contenteditable></span>
+      <span class="input guardian-email" contenteditable></span>
 
-      <button class="btn-dark signup">SIGN UP</button>
+      <button class="btn-dark submit">SIGN UP</button>
+      <div class="txt err" style="color: #f00; display: none">Please fill out all required fields.</div>
+      <div class="txt success" style="color: #79e486; display: none">Form submitted successfully.</div>
+      <div class="txt fail" style="color: #f00; display: none">Failed to submit form.</div>
     </div>
 </div>
   <div class="sticky-bg">
@@ -288,8 +284,32 @@ import '@fontsource/commissioner';
 
   <!-- JavaScript -->
   <script>
+    import PocketBase from 'pocketbase';
+
+    const pb = new PocketBase("http://localhost:8001");
+
     const grades = document.querySelectorAll('.option');
+    const home = document.querySelector(".home");
+    const about = document.querySelector(".about");
+    const support = document.querySelector(".support");
+    const signup = document.querySelector(".submit");
+    const err = document.querySelector(".err");
+    const success = document.querySelector(".success");
+    const fail = document.querySelector(".fail");
+
     let select;
+
+    home.addEventListener("click", () => {
+      window.location.href = "../";
+    });
+
+    about.addEventListener("click", () => {
+      window.location.href = "../?page=about";
+    });
+
+    support.addEventListener("click", () => {
+      window.location.href = "../?page=support";
+    });
     
     grades.forEach((el) => el.addEventListener("click", () => {
       if (select != null) select.classList.remove("btn-select");
@@ -297,6 +317,32 @@ import '@fontsource/commissioner';
       select = el;
       console.log("done");
     }));
+    signup.addEventListener("click", async () => {
+      success.style.display = "none";
+      fail.style.display = "none";
+      let valid = true;
+      if (select == null) valid = false;
+      document.querySelectorAll(".input").forEach((el) => {
+        if (el.innerText.trim() == "") {
+          err.style.display = "block";
+          valid = false;
+        }
+      });
+      if (valid) {
+        err.style.display = "none";
+        const data = {
+            "name": document.querySelector(".name").innerText,
+            "guardian": document.querySelector(".guardian").innerText,
+            "email": document.querySelector(".email").innerText,
+            "guardian_email": document.querySelector(".guardian-email").innerText,
+            "grade": parseInt(select.getAttribute("grade"))
+        };
+        console.log(data);
+        const record = await pb.collection('signups').create(data);
+        if (record.name != null) success.style.display = "block";
+        else fail.style.display = "block";
+      }
+    });
   </script>
 </body>
 
