@@ -8,15 +8,5 @@ export default defineConfig({
   adapter: node({
     mode: "standalone"
   }),
-  vite: {
-    server: {
-      proxy: {
-        "/admin": {
-          target: "http://149.28.43.245:8001",
-          rewrite: (path) => path.replace(/^\/admin/, '')
-        }
-      }
-    }
-  }
 });
 
