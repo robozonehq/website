@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.web
     ports:
-      - "8000:4321"
+      - "80:4321"
   pocketbase:
     build:
       context: .
