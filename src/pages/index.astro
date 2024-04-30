@@ -13,7 +13,7 @@ import '@fontsource/commissioner';
     .title {
       font-family: "Signwood", sans-serif;
       font-style: italic;
-      font-size: 10em;
+      font-size: min(20vw, 10em);
       text-shadow: 7px 10px 0px black;
       z-index: 50;
     }
@@ -171,6 +171,7 @@ import '@fontsource/commissioner';
       height: 100%;
       position: relative;
       background-position: center;
+      margin-bottom: -50%;
     }
 
     .nav {
@@ -227,13 +228,24 @@ import '@fontsource/commissioner';
       line-height: 0;
       margin: 0 0 50px;
       border-bottom: 0.5em solid #75CDFF;
+      text-wrap: wrap;
       width: fit-content;
+    }
+
+    @media screen and (max-width: 750px) {
+      .header {
+        border-bottom: none !important;
+        line-height: 1 !important;
+      }
+      .header span {
+        background-color: #75CDFF;
+      }
     }
 
     .para {
       font-family: "Commissioner", sans-serif;
       width: 60%;
-      font-size: 2.6vh;
+      font-size: min(2.6vh, max(3.5vw, 20px));
     }
 
     .btn-dark {
@@ -305,6 +317,12 @@ import '@fontsource/commissioner';
       bottom: 0;
       transform: rotate(180deg);
     }
+
+    @media screen and (max-width: 750px) {
+      .corner-tl {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -327,7 +345,7 @@ import '@fontsource/commissioner';
   <div style="height: 100%">
     <div class="about-section">
       <div class="section">
-        <div class="header">What is RoboZone?</div>
+        <div class="header"> <span>What is</span> <span>RoboZone?</span></div>
         <div class="para">
           RoboZone is an organization dedicated to teaching students important computer science, engineering, and robotics principles. Our 8-week summer course is split into two parts. During the first 4 weeks, students learn basic engineering, robotics, and computer science principles whilst working together in teams and creating a project. In the final 4 weeks, the groups are set against each other in a competition to see which group can use their newfound skills to create the best robot, and win the competition.
         </div>
@@ -337,7 +355,7 @@ import '@fontsource/commissioner';
 
     <div class="support-section">
       <div class="section">
-        <div class="header">Support Us</div>
+        <div class="header"><span>Support Us</span></div>
         <div class="para">
           At the moment, we haven't official formed as a non-profit. However, we will soon! Once we are an official non-profit, we will begin accepting donations to help us further our mission to introduce children into the wonderful world of robotics and engineering.
         </div>
@@ -361,6 +379,7 @@ import '@fontsource/commissioner';
     const aboutSection = document.querySelector(".about-section");
     const navbar = document.querySelector('.navbar'); 
     const signup = document.querySelectorAll('.signup');
+    const params = new URLSearchParams(window.location.search);
 
     /* NAVIGATION FUNCTIONS */
     const navHero = () => {
@@ -368,19 +387,22 @@ import '@fontsource/commissioner';
       navbar.classList.remove("nav");
       document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
       home.classList.add("nav-select");
+      history.replaceState({}, "home", "/");
     };
     const navAbout = () => {
-        navbar.classList.add("nav");
-        navbar.classList.remove("nav-hero");
-        document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-        about.classList.add("nav-select");
+      navbar.classList.add("nav");
+      navbar.classList.remove("nav-hero");
+      document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
+      about.classList.add("nav-select");
+      history.replaceState({}, "about", "/?page=about");
     };
 
     const navSupport = () => {
-        navbar.classList.add("nav");
-        navbar.classList.remove("nav-hero");
-        document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-        support.classList.add("nav-select");
+      navbar.classList.add("nav");
+      navbar.classList.remove("nav-hero");
+      document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
+      support.classList.add("nav-select");
+      history.replaceState({}, "support", "/?page=support");
     };
     const navUpdate = () => {
       console.log("update");
@@ -422,12 +444,25 @@ import '@fontsource/commissioner';
       navSupport();
     });
 
-    // DO NOT delete ts ignore comments, dialogs are too new for TypeScript.
     signup.forEach((el) => el.addEventListener("click", () => {
-      // @ts-ignore
-      modal.showModal();
+      window.location.href = "/signup";
     }));
+    document.querySelector(".btn-donate").addEventListener("click", () => {
+      window.location.href = "https://hcb.hackclub.com/donations/start/robozone";
+    });
 
+    // Paging logic
+
+    if (params.has('page')) {
+      const page = params.get('page');
+      if (page == "about") {
+        aboutSection.scrollIntoView({ behavior: "smooth" });
+        navAbout();
+      } else if (page == "support") {
+        document.querySelector(".support-section").scrollIntoView({ behavior: "smooth" });
+        navSupport();
+      }
+    }
     // Scroll snapper
     createScrollSnap(element, {
       snapDestinationX: '0%',

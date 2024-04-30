@@ -1,0 +1,359 @@
+---
+import '@fontsource/commissioner';
+---
+<html>
+<head>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <style>
+    @font-face {
+      font-family: "Signwood";
+      src: url("/fonts/Signwood.ttf"), url("/fonts/SignwoodItalic.ttf");
+    }
+
+    .nav-item {
+      font-family: "Signwood", sans-serif;
+      font-size: 2.5em;
+      padding: 0px 15px;
+      margin: 10px 10px 0;
+      transition: all 200ms ease-out;
+      display: inline-block;
+      line-height: 0.5;
+    }
+
+    .signup {
+      height: 100%;
+      position: relative;
+      background-position: center;
+      z-index: 200;
+    }
+
+    .nav {
+      position: absolute;
+      top: 2.4%;
+      right: 5%;
+      z-index: 100;
+    }
+
+    .nav .nav-item {
+      color: black;
+      border-bottom: 10px solid #FFD253;
+      -webkit-transition: all 200ms ease-out;
+    }
+
+    .nav .nav-item:hover {
+      border-bottom: 10px solid #75CDFF;
+      -webkit-transform: translateY(-4px);
+      transform: translateY(-4px);
+    }
+
+    .nav .nav-item:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+
+    .nav .nav-select {
+      border-bottom: 10px solid #75CDFF;
+      display: inline-block;
+      line-height: 0.5;
+    }
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    .section {
+      display: flex;
+      justify-content: center;
+      align-items: left;
+      flex-direction: column;
+      margin-left: 100px;
+      margin-top: 10%;
+      padding-left: 5%;
+    }
+
+    .header {
+      font-family: "Signwood", sans-serif;
+      font-style: italic;
+      font-size: 5em;
+      line-height: 0;
+      margin: 50px 0 50px;
+      border-bottom: 0.5em solid #75CDFF;
+      width: fit-content;
+    }
+
+    .para {
+      font-family: "Commissioner", sans-serif;
+      width: 40%;
+      font-size: min(2.6vh, max(2vw, 20px));
+    }
+
+    .txt {
+        margin-top: 1em;
+        font-family: "Signwood", sans-serif;
+        width: 40%;
+        font-size: min(2.6vh, max(3.5vw, 20px));
+    }
+
+    .btn-dark {
+      font-family: "Signwood", sans-serif;
+      font-size: 3em;
+      font-style: italic;
+      padding: 12px 55px;
+      border-radius: 0px;
+      background: black;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      box-shadow: 9px 9px 0px #FFD253;
+      transition: 300ms;
+      width: 6em;
+      z-index: 100;
+    }
+
+    .btn-dark:hover {
+      box-shadow: 14px 14px 0px #FFD253;
+      -webkit-transform: translateY(-4px);
+      -webkit-transform: translateX(-4px);
+      transform: translateY(-4px);
+      transform: translateX(-4px);
+    }
+
+    .btn-dark:active {
+      box-shadow: 4px 4px 0px #FFD253;
+      -webkit-transform: translateY(4px);
+      -webkit-transform: translateX(4px);
+      transform: translateY(4px);
+      transform: translateX(4px);
+    }
+
+    .btn-select {
+      background: #FFD253;
+      box-shadow: 9px 9px 0px black;
+      color: black;
+    }
+
+    .btn-select:hover {
+      box-shadow: 14px 14px 0px black;
+    }
+
+    .btn-select:active {
+      box-shadow: 4px 4px 0px black;
+    }
+
+    .btn-donate {
+      box-shadow: 9px 9px 0px #79e486;
+    }
+
+    .btn-donate:hover {
+      box-shadow: 14px 14px 0px #79e486;
+    }
+
+    .btn-donate:active {
+      box-shadow: 4px 4px 0px #79e486;
+    }
+
+    .sticky-bg {
+      position: -webkit-sticky;
+      position: sticky;
+      height: 100%;
+      bottom: 0;
+    }
+
+    .corner {
+      position: absolute;
+      width: 12em;
+      height: 12em;
+      background: #FFD253;
+      clip-path: polygon(85% 0, 85% 35%, 35% 35%, 35% 85%, 0 85%, 0 100%, 50% 100%, 50% 50%, 100% 50%, 100% 0);
+    }
+
+    .corner-tl {
+      top: 0;
+      left: 0;
+    }
+
+    .corner-br {
+      right: 0;
+      bottom: 0;
+      transform: rotate(180deg);
+    }
+     
+    .choice {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: fit-content;
+        margin: 40px 0;
+    }
+
+    [contenteditable] {
+      outline: 0px solid transparent;
+    }
+
+    input[type="radio"] {
+      z-index: 1000;
+      accent-color: #FFD253;
+    }
+    .option {
+      margin: 0px 20px 20px;
+      width: fit-content;
+      font-size: 2vw !important;
+      white-space: nowrap;
+    }
+
+    .input {
+      min-width: 9em;
+      width: fit-content;
+      border: none;
+      font-size: 2.6vh;
+      font-family: "Commissioner", sans-serif;
+      color: #666;
+      margin-left: 10px;
+      padding: 15px 0 5px;
+      border-bottom: 0.4rem solid #DDD;
+      transition: all 0.1s ease-in;
+      white-space: nowrap;
+    }
+
+    .input:focus {
+      border: none;
+      border-bottom: 0.6rem solid #FFD253;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar nav">
+    <a class="nav-item home">Home</a>
+    <a class="nav-item about">About</a>
+    <a class="nav-item support">Support</a>
+  </div>
+<div class="signup">
+    <div class="section">
+      <div class="header">Sign Up</div>
+      <div class="para">
+          Welcome to our sign ups for RoboZone. This course will take place in July-August Summer 2024 from [3 Hour Time Frame] at [Location].
+      </div>
+      <div class="txt">
+          Full Name:
+      </div>
+      <span class="input name" contenteditable></span>
+      <div class="txt">
+          What grade will you be entering during the next school year?
+      </div>
+      <!-- DO NOT delete the ts-ignore comments, they have an important purpose. -->
+      <div class="txt choice">
+          <!-- @ts-ignore -->
+          <div class="btn-dark option" grade=6>
+            6th Grade
+          </div>
+          <!-- @ts-ignore -->
+          <div class="btn-dark option" grade=7>
+            7th Grade
+          </div>
+          <!-- @ts-ignore -->
+          <div class="btn-dark option" grade=8>
+            8th Grade
+          </div>
+          <!-- @ts-ignore -->
+          <div class="btn-dark option" grade=9>
+            9th Grade
+          </div>
+      </div>
+      <div class="txt">
+          Student Email:
+      </div>
+      <span class="input email" contenteditable></span>
+      <div class="txt">
+          Guardian Full Name:
+      </div>
+      <span class="input guardian" contenteditable></span>
+      <div class="txt">
+          Guardian Email:
+      </div>
+      <span class="input guardian-email" contenteditable></span>
+
+      <button class="btn-dark submit">SIGN UP</button>
+      <div class="txt err" style="color: #f00; display: none">Please fill out all required fields.</div>
+      <div class="txt success" style="color: #79e486; display: none">Form submitted successfully.</div>
+      <div class="txt fail" style="color: #f00; display: none">Failed to submit form.</div>
+    </div>
+</div>
+  <div class="sticky-bg">
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-br"></div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // @ts-nocheck
+    import PocketBase from 'pocketbase';
+
+    const pb = new PocketBase("http://localhost:8001");
+
+    const grades = document.querySelectorAll('.option');
+    const home = document.querySelector(".home");
+    const about = document.querySelector(".about");
+    const support = document.querySelector(".support");
+    const signup = document.querySelector(".submit");
+    const err = document.querySelector(".err");
+    const success = document.querySelector(".success");
+    const fail = document.querySelector(".fail");
+
+    let select: Element;
+
+    home.addEventListener("click", () => {
+      window.location.href = "../";
+    });
+
+    about.addEventListener("click", () => {
+      window.location.href = "../?page=about";
+    });
+
+    support.addEventListener("click", () => {
+      window.location.href = "../?page=support";
+    });
+    
+    grades.forEach((el) => el.addEventListener("click", () => {
+      if (select != null) select.classList.remove("btn-select");
+      el.classList.add("btn-select");
+      select = el;
+      console.log("done");
+    }));
+    signup.addEventListener("click", async () => {
+      success.style.display = "none";
+      fail.style.display = "none";
+      let valid = true;
+      if (select == null) valid = false;
+      document.querySelectorAll(".input").forEach((el) => {
+        if (el.innerText.trim() == "") {
+          err.style.display = "block";
+          valid = false;
+        }
+      });
+      if (valid) {
+        err.style.display = "none";
+        const data = {
+            "name": document.querySelector(".name").innerText,
+            "guardian": document.querySelector(".guardian").innerText,
+            "email": document.querySelector(".email").innerText,
+            "guardian_email": document.querySelector(".guardian-email").innerText,
+            "grade": parseInt(select.getAttribute("grade"))
+        };
+        console.log(data);
+        try {
+          const record = await pb.collection('signups').create(data);
+          if (record.name != null) success.style.display = "block";
+          else fail.style.display = "block";
+        } catch {
+          fail.style.display = "block";
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
