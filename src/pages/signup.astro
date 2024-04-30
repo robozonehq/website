@@ -244,16 +244,21 @@ import '@fontsource/commissioner';
       <div class="txt">
           What grade will you be entering during the next school year?
       </div>
+      <!-- DO NOT delete the ts-ignore comments, they have an important purpose. -->
       <div class="txt choice">
+          <!-- @ts-ignore -->
           <div class="btn-dark option" grade=6>
             6th Grade
           </div>
+          <!-- @ts-ignore -->
           <div class="btn-dark option" grade=7>
             7th Grade
           </div>
+          <!-- @ts-ignore -->
           <div class="btn-dark option" grade=8>
             8th Grade
           </div>
+          <!-- @ts-ignore -->
           <div class="btn-dark option" grade=9>
             9th Grade
           </div>
@@ -284,6 +289,7 @@ import '@fontsource/commissioner';
 
   <!-- JavaScript -->
   <script>
+    // @ts-nocheck
     import PocketBase from 'pocketbase';
 
     const pb = new PocketBase("http://localhost:8001");
@@ -297,7 +303,7 @@ import '@fontsource/commissioner';
     const success = document.querySelector(".success");
     const fail = document.querySelector(".fail");
 
-    let select;
+    let select: Element;
 
     home.addEventListener("click", () => {
       window.location.href = "../";
@@ -338,9 +344,13 @@ import '@fontsource/commissioner';
             "grade": parseInt(select.getAttribute("grade"))
         };
         console.log(data);
-        const record = await pb.collection('signups').create(data);
-        if (record.name != null) success.style.display = "block";
-        else fail.style.display = "block";
+        try {
+          const record = await pb.collection('signups').create(data);
+          if (record.name != null) success.style.display = "block";
+          else fail.style.display = "block";
+        } catch {
+          fail.style.display = "block";
+        }
       }
     });
   </script>

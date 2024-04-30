@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.web
     ports:
-      - "8000:8080"
+      - "8000:4321"
   pocketbase:
     build:
       context: .
@@ -12,4 +12,8 @@ services:
     ports:
       - "8001:8080"
     volumes:
-      - ./data:/pb_data
+      - data:/pb_data
+
+volumes:
+  data:
+    external: true
