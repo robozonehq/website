@@ -13,7 +13,6 @@ export default defineConfig({
       proxy: {
         "/admin": {
           target: "http://149.28.43.245:8001",
-          changeOrigin: true,
           rewrite: (path) => path.replace(/^\/admin/, '')
         }
       }
