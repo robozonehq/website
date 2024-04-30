@@ -381,7 +381,6 @@ import '@fontsource/commissioner';
     const signup = document.querySelectorAll('.signup');
     const params = new URLSearchParams(window.location.search);
 
-
     /* NAVIGATION FUNCTIONS */
     const navHero = () => {
       navbar.classList.add("nav-hero");
@@ -448,7 +447,6 @@ import '@fontsource/commissioner';
     signup.forEach((el) => el.addEventListener("click", () => {
       window.location.href = "/signup";
     }));
-
     document.querySelector(".btn-donate").addEventListener("click", () => {
       window.location.href = "https://hcb.hackclub.com/donations/start/robozone";
     });
@@ -465,7 +463,6 @@ import '@fontsource/commissioner';
         navSupport();
       }
     }
-
     // Scroll snapper
     createScrollSnap(element, {
       snapDestinationX: '0%',
