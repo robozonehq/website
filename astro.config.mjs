@@ -12,7 +12,7 @@ export default defineConfig({
     server: {
       proxy: {
         "/admin": {
-          target: "https://pocketbase:8080",
+          target: "http://149.28.43.245:8001",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/admin/, '')
         }
