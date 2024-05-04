@@ -9,11 +9,5 @@ export default defineConfig({
   adapter: node({
     mode: "standalone"
   }),
-  integrations: [
-    proxyMiddleware("/api", {
-      target: "http://149.28.43.245:8001/",
-      changeOrigin: true,
-    }),
-  ],
 });
 
