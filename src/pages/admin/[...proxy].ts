@@ -12,6 +12,7 @@ const proxyRequest = (request: Request) => {
 
 export const ALL: APIRoute = async ({ request }) => {
   const proxy = proxyRequest(request);
+  console.log(proxy.url);
   const response = await fetch(proxy);
   console.log(response);
   return new Response(response.body);
