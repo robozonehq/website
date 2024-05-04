@@ -22,6 +22,7 @@
     "bare-events": "^2.2.0",
     "bare-fs": "^2.1.1",
     "bare-path": "^2.1.0",
+    "http-proxy-middleware": "^3.0.0",
     "pocketbase": "^0.21.2",
     "scroll-snap": "^4.0.5",
     "typescript": "^5.4.5"
