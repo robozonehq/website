@@ -5,7 +5,7 @@ const proxyRequest = (request: Request) => {
   console.log(request.url);
   const proxied = Object.create(request);
   proxied.url = new Request(
-    proxyUrl.concat(request.url.replace(/\(.*?)admin/, '')),
+    proxyUrl.concat(request.url.replace(/(.*?)admin/, '')),
     request
   );
 
