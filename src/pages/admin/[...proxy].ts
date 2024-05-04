@@ -1,8 +1,13 @@
 import type { APIRoute } from "astro";
 
 const proxyRequest = (request: Request) => {
+  const proxyUrl = "http://localhost:8001";
+  console.log(request.url);
   const proxied = Object.create(request);
-  proxied.url = request.url.replace(/^\/admin/, '');
+  proxied.url = new Request(
+    request.url.replace(/\/admin/, ''),
+    request
+  );
 
   return proxied;
 };

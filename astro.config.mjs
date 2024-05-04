@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import proxyMiddleware from './plugins/proxy-middleware.mjs';
 
 import node from "@astrojs/node";
 
