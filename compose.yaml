@@ -1,10 +1,16 @@
 services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
   web:
     build:
       context: .
       dockerfile: Dockerfile.web
     ports:
-      - "80:4321"
+      - "8008:4321"
   pocketbase:
     build:
       context: .
