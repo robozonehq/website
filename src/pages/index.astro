@@ -166,6 +166,25 @@ import '@fontsource/commissioner';
       background-position: center;
     }
 
+    .team-section {
+      background: white;
+      position: relative;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: left;
+      flex-direction: column;
+      min-height: 100%;
+      margin-left: 100px;
+      padding-left: 5%;
+    }
+    @media screen and (max-width: 750px) {
+      .team-section {
+        padding-left: 0px;
+        justify-content: left;
+      }
+    }
+
     .support-section {
       background: white;
       height: 100%;
@@ -230,6 +249,7 @@ import '@fontsource/commissioner';
       border-bottom: 0.5em solid #75CDFF;
       text-wrap: wrap;
       width: fit-content;
+      z-index: 27;
     }
 
     @media screen and (max-width: 750px) {
@@ -323,6 +343,55 @@ import '@fontsource/commissioner';
         display: none;
       }
     }
+
+    .profiles {
+      width: 100%;
+      justify-content: center;
+      display: flex;
+    }
+
+    .profile:nth-child(n) > img {
+      transform: rotate(-4deg);
+    }
+    .profile:nth-child(2n) > img {
+      transform: rotate(6deg);
+      margin-right: 15px;
+    }
+
+    .profile {
+      margin: 20px 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .pfp {
+      height: 24vh;
+      box-shadow: 15px 15px 0px #FFD253;
+      object-fit: contain;
+    }
+
+    .name {
+      font-family: "Signwood", sans-serif;
+      width: 60%;
+      font-size: min(6.5vh, max(6vw, 40px));
+      z-index: 50;
+    }
+
+    .profile-desc {
+      font-family: "Commissioner", sans-serif;
+      width: auto;
+      font-size: min(2vh, max(3vw, 16px));
+      text-align: left;
+      z-index: 50;
+    }
+
+    @media screen and (max-width: 1250px) {
+      .profiles, .profile {
+        flex-direction: column;
+      }
+    }
+
   </style>
 </head>
 
@@ -330,7 +399,7 @@ import '@fontsource/commissioner';
   <div class="navbar nav-hero">
     <a class="nav-item nav-select home">Home</a>
     <a class="nav-item about">About</a>
-    <a class="nav-item support">Support</a>
+    <a class="nav-item support">Donate</a>
   </div>
   <div class="hero">
     <div class="content">
@@ -345,7 +414,7 @@ import '@fontsource/commissioner';
   <div style="height: 100%">
     <div class="about-section">
       <div class="section">
-        <div class="header"> <span>What is</span> <span>RoboZone?</span></div>
+        <div class="header"><span>What is</span> <span>RoboZone?</span></div>
         <div class="para">
           RoboZone is an organization dedicated to teaching students important computer science, engineering, and robotics principles. Our 8-week summer course is split into two parts. During the first 4 weeks, students learn basic engineering, robotics, and computer science principles whilst working together in teams and creating a project. In the final 4 weeks, the groups are set against each other in a competition to see which group can use their newfound skills to create the best robot, and win the competition.
         </div>
@@ -353,11 +422,46 @@ import '@fontsource/commissioner';
       </div>
     </div>
 
+    <div class="team-section">
+      <div class="header"><span>The Team</span></div>
+      <div class="profiles">
+        <div class="profile">
+          <img src="/images/daksh.png" class="pfp" />
+          <div style="display: flex; flex-direction: column;margin-left: 20px;">
+            <div class="name">Daksh Gupta</div>
+            <div class="profile-desc">Daksh Gupta, President, is a rising sophomore at South Brunswick High School. He is a member of 750W, his school's robotics team. In his free time, Daksh enjoys working on computer science projects and spending time with friends, dogs and family.</div>
+          </div>
+        </div>
+        <div class="profile">
+          <img src="/images/sammy.png" class="pfp" />
+          <div style="display: flex; flex-direction: column;margin-left: 20px;">
+            <div class="name">Samuel Asefa</div>
+            <div class="profile-desc">Samuel Asefa, Vice-President, is a rising sophomore at South Brunswick High School that is a part of his VEX robotics team. In his free time he enjoys competing in Science Olympiad and spending time with his family, friends, and two cats.</div>
+          </div>
+        </div>
+      </div>
+      <div class="profiles">
+        <div class="profile">
+          <img src="/images/rohan.png" class="pfp" />
+          <div style="display: flex; flex-direction: column;margin-left: 20px;">
+            <div class="name">Rohan Kunala</div>
+            <div class="profile-desc">Rohan Kunala, Treasurer is a rising sophomore at SBHS. He is apart of multiple clubs and organizations related to the STEM area. In his free time Rohan enjoys partaking in innovation research competitions. He enjoys spending time with his family and friends by traveling and camping.</div>
+          </div>
+        </div>
+        <div class="profile">
+          <img src="/images/nitish.png" class="pfp" />
+          <div style="display: flex; flex-direction: column;margin-left: 20px">
+            <div class="name">Nitish Pendyala</div>
+            <div class="profile-desc">Nitish Pendyala, Secretary, is a rising sophomore at South Brunswick High School that is a part of his VEX robotics team. In his free time he enjoys playing volleyball and outdoor activities like hiking and camping. He likes spending time with friends and family and loves  </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="support-section">
       <div class="section">
         <div class="header"><span>Support Us</span></div>
         <div class="para">
-          We are a non-profit organization fiscally sponsored by The Hack Foundation. Offering comprehensive robotics courses is not cheap: any and all donations would be appreciated!
+          We are a non-profit organization fiscally sponsored by The Hack Foundation. Offering comprehensive robotics courses is not cheap: any and all donations are appreciated!
         </div>
         <button class="btn-dark btn-donate">DONATE</button>
       </div>
@@ -377,6 +481,7 @@ import '@fontsource/commissioner';
     const support = document.querySelector(".support");
     const hero = document.querySelector('.hero'); 
     const aboutSection = document.querySelector(".about-section");
+    const teamSection = document.querySelector(".team-section");
     const navbar = document.querySelector('.navbar'); 
     const signup = document.querySelectorAll('.signup');
     const params = new URLSearchParams(window.location.search);
@@ -408,6 +513,7 @@ import '@fontsource/commissioner';
       console.log("update");
       const herorect = hero.getBoundingClientRect(); 
       const aboutrect = aboutSection.getBoundingClientRect(); 
+      const teamrect = teamSection.getBoundingClientRect(); 
       const navrect = navbar.getBoundingClientRect(); 
        
       if (!(herorect.right < navrect.left ||  
@@ -419,7 +525,10 @@ import '@fontsource/commissioner';
       } else if (!(aboutrect.right < navrect.left ||  
              aboutrect.left > navrect.right ||  
              aboutrect.bottom < navrect.top ||  
-             aboutrect.top > navrect.bottom)) { 
+             aboutrect.top > navrect.bottom) || !(teamrect.right < navrect.left ||  
+             teamrect.left > navrect.right ||  
+             teamrect.bottom < navrect.top ||  
+             teamrect.top > navrect.bottom)) { 
         // About page
         navAbout();
       } else {
