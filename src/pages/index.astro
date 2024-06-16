@@ -406,6 +406,8 @@ import '@fontsource/commissioner';
       <div class="title">ROBOZONE</div>
       <div class="desc">Fun and interactive courses teaching students engineering, computer science, and robotics principles.
       </div>
+      <div class="desc">Session 1: July 2nd - 25th</div>
+      <div class="desc">Session 2: July 30th - August 20th</div>
       <button class="btn signup">SIGN UP</button>
     </div>
     <img src="/images/cloud.png" class="cloud" />
@@ -578,17 +580,21 @@ import '@fontsource/commissioner';
         navSupport();
       }
     }
-    // Scroll snapper
-    createScrollSnap(element, {
-      snapDestinationX: '0%',
-      snapDestinationY: '100%',
-      timeout: 50,
-      duration: 200,
-      threshold: 0.2,
-      snapStop: false,
-    }, () => {
-      navUpdate();
-    });
+
+    if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      // true for mobile device
+      // Scroll snapper
+      createScrollSnap(element, {
+        snapDestinationX: '0%',
+        snapDestinationY: '100%',
+        timeout: 50,
+        duration: 200,
+        threshold: 0.2,
+        snapStop: false,
+      }, () => {
+        navUpdate();
+      });
+    }
   </script>
 </body>
 
