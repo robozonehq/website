@@ -2,8 +2,8 @@ onRecordAfterCreateRequest((e) => {
     console.log("recieved record");
     const message = new MailerMessage({
         from: {
-            address: $app.settings().meta.senderAddress,
-            name:    $app.settings().meta.senderName,
+            address: "team@robozonenj.org",
+            name:    "RoboZone Team",
         },
         //to:      [{address: e.record.email()}],
       to:      [{address: "acedaksh07@gmail.com"}],
