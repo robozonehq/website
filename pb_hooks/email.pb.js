@@ -226,5 +226,9 @@ onRecordAfterCreateRequest((e) => {
         // bcc, cc and custom headers are also supported...
     });
 
+    console.log(message);
+    console.log("sending email...");
+
     $app.newMailClient().send(message);
+    console.log("sent!");
 }, "signups")
