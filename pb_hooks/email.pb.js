@@ -1,4 +1,5 @@
 onRecordAfterCreateRequest((e) => {
+    console.log("recieved record");
     const message = new MailerMessage({
         from: {
             address: $app.settings().meta.senderAddress,
@@ -223,7 +224,7 @@ onRecordAfterCreateRequest((e) => {
 </body>
 </html>`,
         // bcc, cc and custom headers are also supported...
-    })
+    });
 
-    $app.newMailClient().send(message)
+    $app.newMailClient().send(message);
 }, "signups")
