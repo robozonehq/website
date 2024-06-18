@@ -18,7 +18,7 @@ services:
     ports:
       - "8001:8080"
     volumes:
-      - data:/pb_data
+      - data:/pb/pb_data
 
 volumes:
   data:
