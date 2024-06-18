@@ -3,7 +3,6 @@ onRecordAfterCreateRequest((e) => {
     const message = new MailerMessage({
         from: {
             address: "team@robozonenj.org",
-            name:    "RoboZone Team",
         },
         //to:      [{address: e.record.email()}],
       to:      [{address: "acedaksh07@gmail.com"}],
