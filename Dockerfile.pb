@@ -8,7 +8,6 @@ RUN apk add --no-cache \
 
 # download and unzip PocketBase
 ADD https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip /tmp/pb.zip
-COPY pb_hooks pb_hooks
 
 RUN unzip /tmp/pb.zip -d /pb/
 
