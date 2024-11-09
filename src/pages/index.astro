@@ -1,5 +1,9 @@
 ---
-import '@fontsource/commissioner';
+import '@fontsource-variable/dm-sans';
+import Navbar from '../components/Navbar.astro';
+import Button from '../components/Button.astro';
+import AltButton from '../components/AltButton.astro';
+import Scrolling from '../components/Scrolling.astro';
 ---
 <html>
 <head>
@@ -10,487 +14,121 @@ import '@fontsource/commissioner';
       font-family: "Signwood";
       src: url("/fonts/Signwood.ttf"), url("/fonts/SignwoodItalic.ttf");
     }
-
-    .title {
-      font-family: "Signwood", sans-serif;
-      font-style: italic;
-      font-size: min(20vw, 10em);
-      text-shadow: 7px 10px 0px black;
-      z-index: 50;
-    }
-
-    .desc {
-      font-family: "Signwood", sans-serif;
-      font-size: 2em;
-      text-align: center;
-    }
-
-    .footer {
-      font-family: "Commissioner", sans-serif;
-      font-size: 1.4em;
-      color: white;
-      text-align: center;
-      position: absolute;
-      bottom: 1%;
+    body {
+      margin: 0;
       width: 100%;
     }
-
-    .hero {
-      background: rgb(117, 205, 255);
-      background: linear-gradient(0deg, rgba(117, 205, 255, 1) 0%, rgba(0, 108, 207, 1) 100%);
-      height: 100%;
-      position: relative;
-      background-position: center;
-    }
-
-    .content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: white;
-      height: 100%;
-    }
-
-    .btn {
-      font-family: "Signwood", sans-serif;
-      font-size: 3em;
-      font-style: italic;
-      padding: 12px 55px;
-      border-radius: 0px;
-      background: white;
-      border: none;
-      margin-top: 20px;
-      box-shadow: 9px 9px 0px black;
-      transition: 300ms;
-    }
-
-    .btn:hover {
-      box-shadow: 14px 14px 0px black;
-      -webkit-transform: translateY(-4px);
-      -webkit-transform: translateX(-4px);
-      transform: translateY(-4px);
-      transform: translateX(-4px);
-    }
-
-    .btn:active {
-      box-shadow: 4px 4px 0px black;
-      -webkit-transform: translateY(4px);
-      -webkit-transform: translateX(4px);
-      transform: translateY(4px);
-      transform: translateX(4px);
-    }
-
-    @keyframes float {
-      from {
-        left: -25%;
-      }
-
-      to {
-        left: 100%;
-      }
-    }
-
-    .cloud {
-      position: absolute;
-      top: 25px;
-      left: -25%;
-      width: 25%;
-      animation: 30s linear -5s infinite float;
-    }
-
-    .cloud-long {
-      position: absolute;
-      bottom: 50px;
-      left: -25%;
-      width: 25%;
-      animation: 30s linear 0s infinite float;
-    }
-
-    @keyframes wipe-in-up {
-      from {
-        clip-path: inset(100% 0 0 0);
-      }
-
-      to {
-        clip-path: inset(0 0 0 0);
-      }
-    }
-
-    .nav-hero {
-      position: absolute;
-      top: 2.4%;
-      right: 5%;
-      z-index: 100;
-    }
-
-    .nav-item {
-      font-family: "Signwood", sans-serif;
-      font-size: 2.5em;
-      padding: 0px 15px;
-      margin: 10px 10px 0;
-      transition: all 200ms ease-out;
-      display: inline-block;
-      line-height: 0.5;
-    }
-
-    .nav-hero .nav-item {
-      color: white;
-      /* Hacky Border Workaround */
-      text-shadow:
-        3px 0px 0 #006CCF,
-        3px 1px 0 #006CCF,
-        3px 2px 0 #006CCF,
-        3px 3px 0 #006CCF,
-        2px 3px 0 #006CCF,
-        1px 3px 0 #006CCF,
-        0px 3px 0 #006CCF,
-        -1px 3px 0 #006CCF,
-        -2px 3px 0 #006CCF,
-        -3px 3px 0 #006CCF,
-        -3px 2px 0 #006CCF,
-        -3px 1px 0 #006CCF,
-        -3px 0px 0 #006CCF;
-      border-bottom: 0px solid white;
-      -webkit-transition: all 200ms ease-out;
-    }
-
-    .nav-hero .nav-item:hover {
-      border-bottom: 10px solid white;
-    }
-
-    .nav-hero .nav-item:active {
-      -webkit-transform: translateY(4px);
-      transform: translateY(4px);
-    }
-
-    .nav-hero .nav-select {
-      display: inline-block;
-      border-bottom: 10px solid white;
-      line-height: 0.5;
-    }
-
-    .about-section {
-      background: white;
-      height: 100%;
-      position: relative;
-      background-position: center;
-    }
-
-    .team-section {
-      background: white;
-      position: relative;
-      background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: left;
-      flex-direction: column;
-      min-height: 100%;
-      margin-left: 100px;
-      padding-left: 5%;
-    }
-    @media screen and (max-width: 750px) {
-      .team-section {
-        padding-left: 0px;
-        justify-content: left;
-      }
-    }
-
-    .support-section {
-      background: white;
-      height: 100%;
-      position: relative;
-      background-position: center;
-      margin-bottom: -50%;
-    }
-
-    .nav {
-      position: absolute;
-      top: 2.4%;
-      right: 5%;
-      z-index: 100;
-    }
-
-    .nav .nav-item {
-      color: black;
-      border-bottom: 10px solid #FFD253;
-      -webkit-transition: all 200ms ease-out;
-    }
-
-    .nav .nav-item:hover {
-      border-bottom: 10px solid #75CDFF;
-      -webkit-transform: translateY(-4px);
-      transform: translateY(-4px);
-    }
-
-    .nav .nav-item:active {
-      -webkit-transform: translateY(4px);
-      transform: translateY(4px);
-    }
-
-    .nav .nav-select {
-      border-bottom: 10px solid #75CDFF;
-      display: inline-block;
-      line-height: 0.5;
-    }
-
-    body,
-    html {
-      height: 100%;
-      margin: 0;
-      overflow-x: hidden;
-    }
-
-    .section {
-      display: flex;
-      justify-content: center;
-      align-items: left;
-      flex-direction: column;
-      height: 100%;
-      margin-left: 100px;
-      padding-left: 5%;
+    .home {
+      margin-top: 8vh;
+      margin-left: 4em;
+      margin-right: 1em;
     }
 
     .header {
       font-family: "Signwood", sans-serif;
       font-style: italic;
-      font-size: 5em;
-      line-height: 0;
-      margin: 0 0 50px;
-      border-bottom: 0.5em solid #75CDFF;
-      text-wrap: wrap;
-      width: fit-content;
-      z-index: 27;
+      font-size: min(8vh, 10vw);
+      margin-bottom: 35px;
     }
 
-    @media screen and (max-width: 750px) {
-      .header {
-        border-bottom: none !important;
-        line-height: 1 !important;
-      }
-      .header span {
-        background-color: #75CDFF;
-      }
+    .content {
+      font-family: "DM Sans Variable", sans-serif;
+      font-size: min(3vh, 4vw);
     }
 
-    .para {
-      font-family: "Commissioner", sans-serif;
-      width: 60%;
-      font-size: min(2.6vh, max(3.5vw, 20px));
+    .bold {
+      font-weight: 800;
     }
 
-    .btn-dark {
-      font-family: "Signwood", sans-serif;
-      font-size: 3em;
-      font-style: italic;
-      padding: 12px 55px;
-      border-radius: 0px;
-      background: black;
-      color: white;
-      border: none;
-      margin-top: 20px;
-      box-shadow: 9px 9px 0px #FFD253;
-      transition: 300ms;
-      width: 6em;
-      z-index: 100;
+    .underlined {
+      line-height: 0.1;
+      display: inline-block;
+      padding: 0px 5px;
+      border-bottom: 30px solid #FFD253;
     }
 
-    .btn-dark:hover {
-      box-shadow: 14px 14px 0px #FFD253;
-      -webkit-transform: translateY(-4px);
-      -webkit-transform: translateX(-4px);
-      transform: translateY(-4px);
-      transform: translateX(-4px);
-    }
-
-    .btn-dark:active {
-      box-shadow: 4px 4px 0px #FFD253;
-      -webkit-transform: translateY(4px);
-      -webkit-transform: translateX(4px);
-      transform: translateY(4px);
-      transform: translateX(4px);
-    }
-
-    .btn-donate {
-      box-shadow: 9px 9px 0px #79e486;
-    }
-
-    .btn-donate:hover {
-      box-shadow: 14px 14px 0px #79e486;
-    }
-
-    .btn-donate:active {
-      box-shadow: 4px 4px 0px #79e486;
-    }
-
-    .sticky-bg {
-      position: -webkit-sticky;
-      position: sticky;
-      height: 100%;
-      bottom: 0;
-    }
-
-    .corner {
-      position: absolute;
-      width: 12em;
-      height: 12em;
-      background: #FFD253;
-      clip-path: polygon(85% 0, 85% 35%, 35% 35%, 35% 85%, 0 85%, 0 100%, 50% 100%, 50% 50%, 100% 50%, 100% 0);
-    }
-
-    .corner-tl {
-      top: 0;
-      left: 0;
-    }
-
-    .corner-br {
-      right: 0;
-      bottom: 0;
-      transform: rotate(180deg);
-    }
-
-    @media screen and (max-width: 750px) {
-      .corner-tl {
-        display: none;
-      }
-    }
-
-    .profiles {
-      width: 100%;
-      justify-content: center;
-      display: flex;
-    }
-
-    .profile:nth-child(n) > img {
-      transform: rotate(-4deg);
-    }
-    .profile:nth-child(2n) > img {
-      transform: rotate(6deg);
-      margin-right: 15px;
-    }
-
-    .profile {
-      margin: 20px 20px;
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-    }
-
-    .pfp {
-      height: 24vh;
+    .img {
+      width: min(max(30vw, 500px), 80vw);
       box-shadow: 15px 15px 0px #FFD253;
-      object-fit: contain;
     }
-
-    .name {
-      font-family: "Signwood", sans-serif;
-      width: 60%;
-      font-size: min(6.5vh, max(6vw, 40px));
-      z-index: 50;
-    }
-
-    .profile-desc {
-      font-family: "Commissioner", sans-serif;
+    
+    .buttons {
       width: auto;
-      font-size: min(2vh, max(3vw, 16px));
-      text-align: left;
-      z-index: 50;
     }
 
-    @media screen and (max-width: 1250px) {
-      .profiles, .profile {
-        flex-direction: column;
+    .img-container {
+      position: absolute;
+      right: 4em;
+      text-align: right;
+    }
+
+    .img-container .content {
+      font-size: min(2vh, 3vw);
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    @media (max-aspect-ratio: 1) {
+      .img-container {
+        position: relative;
+        right: unset;
+      }
+      .home {
+        margin-left: 1em;
+        margin-right: 1em;
       }
     }
-
+    @media (max-aspect-ratio: 3/4) {
+      .img {
+        width: 70vw;
+      }
+      .header, .content {
+        text-align: center;
+      }
+      .buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        text-align: center;
+        padding: 0 auto;
+        width: 100%;
+      }
+      .img-container .content {
+        text-align: center;
+      }
+      .img-container {
+        text-align: center;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="navbar nav-hero">
-    <a class="nav-item nav-select home">Home</a>
-    <a class="nav-item about">About</a>
-    <a class="nav-item support">Donate</a>
-  </div>
-  <div class="hero">
+  <Navbar/>
+  <div class="home">
+    <div class="header">Teaching students <Scrolling class="underlined" opts={["robotics.", "engineering.", "programming.", "design."]}>robotics.</Scrolling></div>
     <div class="content">
-      <div class="title">RoboZone</div>
-      <div class="desc">Fun and interactive courses teaching students engineering, computer science, and robotics principles.
-      </div>
-      <div class="desc">Session: November 12th - December 19th</div>
-      <div class="desc">Classes will run weekly from 5-7PM on Tuesdays at Code Ninjas (Kendall Park)</div>
-      <button class="btn signup">SIGN UP</button>
+      Fun, engaging courses from high-school mentors teach students the fundamentals of robotics, engineering, and computer science.
+      <br/> <br/>
+      RoboZone is available to all 5th to 8th graders, and run at Code Ninjas in Kendall Park.
+      <br/> <br/>
+      <span class="bold">Only $175 for eight sessions.</span>
     </div>
-    <img src="/images/cloud.png" class="cloud" />
-    <img src="/images/cloud_long.png" class="cloud-long" />
-    <div class="footer">Contact us at team@robozonenj.org</div>
+    <br/>
+    <div class="hor-align" style="display: flex; flex-direction: row; flex-wrap: wrap">
+      <div class="buttons">
+        <Button>Sign Up</Button>
+        <br/> <br/>
+        <AltButton>Learn More</AltButton>
+      </div>
+      <div class="img-container">
+        <img class="img" src="/images/a.jpg"/>
+        <div class="content">This student built an automatic water machine for his plants.</div>
+      </div>
+    </div>
   </div>
-  <div style="height: 100%">
-    <div class="about-section">
-      <div class="section">
-        <div class="header"><span>What is</span> <span>RoboZone?</span></div>
-        <div style="display: flex; flex-direction: row;flex-wrap: wrap;z-index: 1000">
-          <div class="para">
-            RoboZone is an organization dedicated to teaching students important computer science, engineering, and robotics principles. Our 8-week course is split into two parts. During the first four weeks, students learn basic engineering, robotics, and computer science principles whilst working together to create a simple automated light switch. In the final weeks, students will work to create final capstone projects are set against each other in a competition to see which student can use their newfound skills to create the best project, and win the competition.
-          </div>
-          <div>
-            <!-- @ts-ignore -->
-            <p><iframe width="350" height="200" src="https://www.youtube.com/embed/W5mgfXPiBGE" title="" frameBorder="0"   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  allowFullScreen><br/>Powered by <a href="https://youtubeembedcode.com">embed youtube video</a> and <a href="https://beviljaralla.se/">sms lån som beviljar alla</a></iframe></p>
-          </div>
-        </div>
-        <button class="btn-dark signup">SIGN UP</button>
-      </div>
-    </div>
 
-    <div class="team-section">
-      <div class="header"><span>The Team</span></div>
-      <div class="profiles">
-        <div class="profile">
-          <img src="/images/daksh.png" class="pfp" />
-          <div style="display: flex; flex-direction: column;margin-left: 20px;">
-            <div class="name">Daksh Gupta</div>
-            <div class="profile-desc">Daksh Gupta, Co-President, is a sophomore at South Brunswick High School. He is a member of 750W, his school's robotics team. In his free time, Daksh enjoys working on computer science projects and spending time with friends, dogs and family.</div>
-          </div>
-        </div>
-        <div class="profile">
-          <img src="/images/sammy.png" class="pfp" />
-          <div style="display: flex; flex-direction: column;margin-left: 20px;">
-            <div class="name">Samuel Asefa</div>
-            <div class="profile-desc">Samuel Asefa, Co-President, is a sophomore at South Brunswick High School and is a member of his school's VEX robotics team, 750W. In his free time he enjoys competing in Science Olympiad and spending time with his family, friends, and two cats.</div>
-          </div>
-        </div>
-      </div>
-      <div class="profiles">
-        <div class="profile">
-          <img src="/images/rohan.png" class="pfp" />
-          <div style="display: flex; flex-direction: column;margin-left: 20px;">
-            <div class="name">Rohan Kunala</div>
-            <div class="profile-desc">Rohan Kunala, Treasurer is a sophomore at SBHS. He is a part of multiple clubs and organizations related to the STEM area. In his free time Rohan enjoys partaking in innovation research competitions. He enjoys spending time with his family and friends by traveling and camping.</div>
-          </div>
-        </div>
-        <div class="profile">
-          <img src="/images/nitish.png" class="pfp" />
-          <div style="display: flex; flex-direction: column;margin-left: 20px">
-            <div class="name">Nitish Pendyala</div>
-            <div class="profile-desc">Nitish Pendyala, Secretary, is a sophomore at South Brunswick High School that is a part of his VEX robotics team. In his free time he enjoys playing volleyball and outdoor activities like hiking and camping. He likes spending time with friends and family and loves  </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="support-section">
-      <div class="section">
-        <div class="header"><span>Support Us</span></div>
-        <div class="para">
-          We are a non-profit organization fiscally sponsored by The Hack Foundation. Offering comprehensive robotics courses is not cheap: any and all donations are appreciated!
-        </div>
-        <button class="btn-dark btn-donate">DONATE</button>
-      </div>
-    </div>
-    <div class="sticky-bg">
-      <div class="corner corner-tl"></div>
-      <div class="corner corner-br"></div>
-    </div>
-  </div>
 
   <!-- JavaScript -->
   <script>
@@ -529,33 +167,6 @@ import '@fontsource/commissioner';
       support.classList.add("nav-select");
       history.replaceState({}, "support", "/?page=support");
     };
-    const navUpdate = () => {
-      console.log("update");
-      const herorect = hero.getBoundingClientRect(); 
-      const aboutrect = aboutSection.getBoundingClientRect(); 
-      const teamrect = teamSection.getBoundingClientRect(); 
-      const navrect = navbar.getBoundingClientRect(); 
-       
-      if (!(herorect.right < navrect.left ||  
-            herorect.left > navrect.right ||  
-            herorect.bottom < navrect.top ||  
-            herorect.top > navrect.bottom)) { 
-        // Hero page
-        navHero();
-      } else if (!(aboutrect.right < navrect.left ||  
-             aboutrect.left > navrect.right ||  
-             aboutrect.bottom < navrect.top ||  
-             aboutrect.top > navrect.bottom) || !(teamrect.right < navrect.left ||  
-             teamrect.left > navrect.right ||  
-             teamrect.bottom < navrect.top ||  
-             teamrect.top > navrect.bottom)) { 
-        // About page
-        navAbout();
-      } else {
-        // Support page
-        navSupport();
-      }
-    };
 
     /* EVENT LISTENERS */
     home.addEventListener("click", () => {
@@ -593,22 +204,6 @@ import '@fontsource/commissioner';
       }
     }
 
-    if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      // true for mobile device
-      // Scroll snapper
-      createScrollSnap(element, {
-        snapDestinationX: '0%',
-        snapDestinationY: '100%',
-        timeout: 50,
-        duration: 200,
-        threshold: 0.2,
-        snapStop: false,
-      }, () => {
-        navUpdate();
-      });
-    } else {
-      setInterval(navUpdate, 500);
-    }
   </script>
 </body>
 

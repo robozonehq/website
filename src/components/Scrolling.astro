@@ -1,0 +1,51 @@
+---
+interface Props {
+  opts: string[];
+}
+const {class: className, opts, ...rest} = Astro.props;
+---
+<style>
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+  <span class={className} {...rest} data-opts={opts}><slot/></span>
+<script>
+  let scroller = document.querySelector('span');
+  let opts = scroller.dataset.opts.split(",");
+  console.log(opts);
+  let i = 0;
+  setInterval(() => {
+    i++;
+    // Fade out old
+    scroller.style.animation= "fadeOut 0.5s ease 1";
+    scroller.style.opacity = 0;
+    setTimeout(() => {
+      // Fade in new
+      scroller.style.animation = "fadeIn 0.5s ease 1";
+      // Scroll text
+      scroller.innerText = opts[i % opts.length];
+      setTimeout(() => {
+        scroller.style.opacity = 1;
+      }, 500);
+    }, 500);
+  }, 3000);
+</script>

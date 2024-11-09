@@ -1,0 +1,71 @@
+<style>
+  .navbar {
+    background: #53C1FF;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: right;
+    padding: 5px 0px;
+  }
+
+  .nav-item {
+    font-family: "Signwood", sans-serif;
+    font-style: italic;
+    font-size: min(4vh, 5vw);
+    margin: 10px 20px;
+    line-height: 0.5;
+    display: inline-block;
+    color: white;
+    /* Hacky Border Workaround */
+    text-shadow:
+      3px 0px 0 #53C1FF,
+      3px 1px 0 #53C1FF,
+      3px 2px 0 #53C1FF,
+      3px 3px 0 #53C1FF,
+      2px 3px 0 #53C1FF,
+      1px 3px 0 #53C1FF,
+      0px 3px 0 #53C1FF,
+      -1px 3px 0 #53C1FF,
+      -2px 3px 0 #53C1FF,
+      -3px 3px 0 #53C1FF,
+      -3px 2px 0 #53C1FF,
+      -3px 1px 0 #53C1FF,
+      -3px 0px 0 #53C1FF;
+    border-bottom: 0px solid white;
+    -webkit-transition: all 200ms ease-out;
+    padding: 0px 15px;
+  }
+  .nav-select, .nav-item:hover {
+    border-bottom: 10px solid white;
+  }
+
+  .nav-item:active {
+    transform: translateY(10px);
+  }
+  .title {
+    font-family: "Signwood", sans-serif;
+    font-style: italic;
+    font-size: min(4vh, 5vw);
+    text-shadow: 3px 4px 0px black;
+    justify-self: left;
+    left: 40px;
+    position: absolute;
+  }
+
+  @media (max-aspect-ratio: 3/4) {
+    .home {
+      display: none;
+    }
+  }
+</style>
+<div class="navbar">
+
+  <div class="title">RoboZone</div>
+  <a class="nav-item nav-select home">Home</a>
+  <a class="nav-item about">About</a>
+  <a class="nav-item signup">Sign Up</a>
+</div>

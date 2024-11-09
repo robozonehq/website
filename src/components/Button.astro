@@ -1,0 +1,45 @@
+---
+interface Props {
+  color?: string;
+}
+const { color = "#FFD253" } = Astro.props;
+---
+<style define:vars={{color}}>
+  .btn {
+    font-family: "Signwood", sans-serif;
+    font-size: min(5vh, 6vw);
+    font-style: italic;
+    padding: 12px 55px;
+    border-radius: 0px;
+    background: black;
+    border: none;
+    margin: 20px;
+    box-shadow: 9px 9px 0px var(--color);
+    transition: 300ms;
+    color: white;
+  }
+
+  @media (max-aspect-ratio: 3/4) {
+    .btn {
+      padding: 12px 25px;
+    }
+  }
+
+  .btn:hover {
+    box-shadow: 14px 14px 0px var(--color);
+    -webkit-transform: translateY(-4px);
+    -webkit-transform: translateX(-4px);
+    transform: translateY(-4px);
+    transform: translateX(-4px);
+  }
+
+  .btn:active {
+    box-shadow: 4px 4px 0px var(--color);
+    -webkit-transform: translateY(4px);
+    -webkit-transform: translateX(4px);
+    transform: translateY(4px);
+    transform: translateX(4px);
+  }
+</style>
+
+  <button class="btn"><slot/></button>
