@@ -1,5 +1,6 @@
 ---
 interface Props {
+  class?: string;
   opts: string[];
 }
 const {class: className, opts, ...rest} = Astro.props;
@@ -37,14 +38,14 @@ const {class: className, opts, ...rest} = Astro.props;
     i++;
     // Fade out old
     scroller.style.animation= "fadeOut 0.5s ease 1";
-    scroller.style.opacity = 0;
+    scroller.style.opacity = "0"; // typescript is stupid, made me use a string here
     setTimeout(() => {
       // Fade in new
       scroller.style.animation = "fadeIn 0.5s ease 1";
       // Scroll text
       scroller.innerText = opts[i % opts.length];
       setTimeout(() => {
-        scroller.style.opacity = 1;
+        scroller.style.opacity = "1";
       }, 500);
     }, 500);
   }, 3000);

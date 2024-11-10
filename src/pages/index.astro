@@ -239,29 +239,11 @@ import Scrolling from '../components/Scrolling.astro';
 
   <!-- JavaScript -->
   <script>
-    const element = document.body;
     const signups = document.querySelectorAll(".signup");
 
     signups.forEach((el) => el.addEventListener("click", () => {
       window.location.href = "/signup";
     }));
-    document.querySelector(".btn-donate").addEventListener("click", () => {
-      window.location.href = "https://hcb.hackclub.com/donations/start/robozone";
-    });
-
-    // Paging logic
-
-    if (params.has('page')) {
-      const page = params.get('page');
-      if (page == "about") {
-        aboutSection.scrollIntoView({ behavior: "smooth" });
-        navAbout();
-      } else if (page == "support") {
-        document.querySelector(".support-section").scrollIntoView({ behavior: "smooth" });
-        navSupport();
-      }
-    }
-
   </script>
 </body>
 

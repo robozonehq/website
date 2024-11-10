@@ -1,5 +1,6 @@
 ---
 interface Props {
+  class?: string;
   color?: string;
 }
 const { class: className, color = "#FFD253", ...rest } = Astro.props;
@@ -42,4 +43,4 @@ const { class: className, color = "#FFD253", ...rest } = Astro.props;
   }
 </style>
 
-  <button class:list={["btn", className]}><slot/></button>
+  <button class:list={["btn", className]} {...rest}><slot/></button>
