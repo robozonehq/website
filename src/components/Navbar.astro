@@ -71,12 +71,12 @@
 </div>
 <script>
   const about = document.querySelector(".about");
-  const home = document.querySelector(".home");
+  const home = document.querySelectorAll(".home");
   const aboutPage = document.querySelector(".about-page");
   about.addEventListener("click", () => {
     aboutPage.scrollIntoView({ behavior: "smooth" });
   });
-  home.addEventListener("click", () => {
+  home.forEach((el) => el.addEventListener("click", () => {
     window.scrollTo({top: 0, behavior: "smooth"});
-  });
+  }));
 </script>
