@@ -2,7 +2,7 @@
 interface Props {
   color?: string;
 }
-const { color = "#FFD253" } = Astro.props;
+const { class: className, color = "#FFD253", ...rest } = Astro.props;
 ---
 <style define:vars={{color}}>
   .btn {
@@ -42,4 +42,4 @@ const { color = "#FFD253" } = Astro.props;
   }
 </style>
 
-  <button class="btn"><slot/></button>
+  <button class:list={["btn", className]}><slot/></button>

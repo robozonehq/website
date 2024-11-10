@@ -10,6 +10,7 @@
     color: white;
     justify-content: right;
     padding: 5px 0px;
+    z-index: 1000;
   }
 
   .nav-item {
@@ -57,15 +58,25 @@
   }
 
   @media (max-aspect-ratio: 3/4) {
-    .home {
+    .home-item {
       display: none;
     }
   }
 </style>
 <div class="navbar">
-
-  <div class="title">RoboZone</div>
-  <a class="nav-item nav-select home">Home</a>
+  <div class="title home">RoboZone</div>
+  <a class="nav-item home home-item">Home</a>
   <a class="nav-item about">About</a>
   <a class="nav-item signup">Sign Up</a>
 </div>
+<script>
+  const about = document.querySelector(".about");
+  const home = document.querySelector(".home");
+  const aboutPage = document.querySelector(".about-page");
+  about.addEventListener("click", () => {
+    aboutPage.scrollIntoView({ behavior: "smooth" });
+  });
+  home.addEventListener("click", () => {
+    window.scrollTo({top: 0, behavior: "smooth"});
+  });
+</script>

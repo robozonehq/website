@@ -1,5 +1,6 @@
 ---
-import '@fontsource/commissioner';
+import '@fontsource-variable/dm-sans';
+import Navbar from '../components/Navbar.astro';
 ---
 <html>
 <head>
@@ -11,51 +12,11 @@ import '@fontsource/commissioner';
       src: url("/fonts/Signwood.ttf"), url("/fonts/SignwoodItalic.ttf");
     }
 
-    .nav-item {
-      font-family: "Signwood", sans-serif;
-      font-size: 2.5em;
-      padding: 0px 15px;
-      margin: 10px 10px 0;
-      transition: all 200ms ease-out;
-      display: inline-block;
-      line-height: 0.5;
-    }
-
     .signup {
       height: 100%;
       position: relative;
       background-position: center;
       z-index: 200;
-    }
-
-    .nav {
-      position: absolute;
-      top: 2.4%;
-      right: 5%;
-      z-index: 100;
-    }
-
-    .nav .nav-item {
-      color: black;
-      border-bottom: 10px solid #FFD253;
-      -webkit-transition: all 200ms ease-out;
-    }
-
-    .nav .nav-item:hover {
-      border-bottom: 10px solid #75CDFF;
-      -webkit-transform: translateY(-4px);
-      transform: translateY(-4px);
-    }
-
-    .nav .nav-item:active {
-      -webkit-transform: translateY(4px);
-      transform: translateY(4px);
-    }
-
-    .nav .nav-select {
-      border-bottom: 10px solid #75CDFF;
-      display: inline-block;
-      line-height: 0.5;
     }
 
     body,
@@ -86,7 +47,7 @@ import '@fontsource/commissioner';
     }
 
     .para {
-      font-family: "Commissioner", sans-serif;
+      font-family: "DM Sans Variable", sans-serif;
       width: 40%;
       font-size: min(2.6vh, max(2vw, 20px));
     }
@@ -210,7 +171,7 @@ import '@fontsource/commissioner';
       width: fit-content;
       border: none;
       font-size: 2.6vh;
-      font-family: "Commissioner", sans-serif;
+      font-family: "DM Sans Variable", sans-serif;
       color: #666;
       margin-left: 10px;
       padding: 15px 0 5px;
@@ -227,12 +188,8 @@ import '@fontsource/commissioner';
 </head>
 
 <body>
-  <div class="navbar nav">
-    <a class="nav-item home">Home</a>
-    <a class="nav-item about">About</a>
-    <a class="nav-item support">Support</a>
-  </div>
 <div class="signup">
+    <Navbar />
     <div class="section">
       <div class="header">Sign Up</div>
       <div class="para">
@@ -297,9 +254,8 @@ import '@fontsource/commissioner';
     const pb = new PocketBase("https://robozonenj.org/admin");
 
     const grades = document.querySelectorAll('.option');
-    const home = document.querySelector(".home");
+    const home = document.querySelectorAll(".home");
     const about = document.querySelector(".about");
-    const support = document.querySelector(".support");
     const signup = document.querySelector(".submit");
     const err = document.querySelector(".err");
     const success = document.querySelector(".success");
@@ -307,18 +263,14 @@ import '@fontsource/commissioner';
 
     let select: Element;
 
-    home.addEventListener("click", () => {
+    home.forEach((el) => el.addEventListener("click", () => {
       window.location.href = "../";
-    });
+    }));
 
     about.addEventListener("click", () => {
       window.location.href = "../?page=about";
     });
 
-    support.addEventListener("click", () => {
-      window.location.href = "../?page=support";
-    });
-    
     grades.forEach((el) => el.addEventListener("click", () => {
       if (select != null) select.classList.remove("btn-select");
       el.classList.add("btn-select");

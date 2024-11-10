@@ -18,10 +18,29 @@ import Scrolling from '../components/Scrolling.astro';
       margin: 0;
       width: 100%;
     }
+
     .home {
       margin-top: 8vh;
       margin-left: 4em;
       margin-right: 1em;
+      height: 92vh;
+    }
+
+    .about-page {
+      text-align: right;
+      margin-right: 4em;
+      margin-left: 1em;
+      margin-top: 5vh;
+      height: 90vh;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .about-section {
+      text-align: left;
+      width: 40vw;
+      margin-left: auto;
     }
 
     .header {
@@ -36,6 +55,10 @@ import Scrolling from '../components/Scrolling.astro';
       font-size: min(3vh, 4vw);
     }
 
+    .about-page .content {
+      text-align: left;
+    }
+
     .bold {
       font-weight: 800;
     }
@@ -47,9 +70,36 @@ import Scrolling from '../components/Scrolling.astro';
       border-bottom: 30px solid #FFD253;
     }
 
+    .blue {
+      background: #53C1FF;
+    }
+
     .img {
       width: min(max(30vw, 500px), 80vw);
       box-shadow: 15px 15px 0px #FFD253;
+    }
+
+    .about-page .img {
+      display: block;
+      margin-bottom: 50px;
+      width: unset;
+      height: 20vw;
+    }
+
+    .images {
+      margin-left: 8vw;
+    }
+
+    .images-2 {
+      display: none;
+    }
+
+    .img-1 {
+      transform: rotate(5deg) translateX(-5vw);
+    }
+
+    .img-2 {
+      transform: rotate(-3deg) translateX(10vw); 
     }
     
     .buttons {
@@ -73,15 +123,48 @@ import Scrolling from '../components/Scrolling.astro';
         position: relative;
         right: unset;
       }
-      .home {
+      .home, .about-page, .about-section {
         margin-left: 1em;
         margin-right: 1em;
+        margin-bottom: 11em;
+        display: block;
       }
-    }
-    @media (max-aspect-ratio: 3/4) {
-      .img {
-        width: 70vw;
+      .about-section {
+        width: 100%;
       }
+      .about-page .content {
+        text-align: center;
+      }
+      .about-section {
+        text-align: center;
+      }
+      .images {
+        display: none;
+      }
+
+      .images-2 {
+        display: block;
+        margin-left: 1em;
+        text-align: center;
+        width: 100%;
+      }
+      .img-1 {
+        transform: rotate(5deg);
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 4em;
+      }
+
+      .img-2 {
+        transform: rotate(-3deg); 
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .about-page .img {
+        height: 60vw;
+      }
+
       .header, .content {
         text-align: center;
       }
@@ -118,73 +201,48 @@ import Scrolling from '../components/Scrolling.astro';
     <br/>
     <div class="hor-align" style="display: flex; flex-direction: row; flex-wrap: wrap">
       <div class="buttons">
-        <Button>Sign Up</Button>
+        <Button class="signup">Sign Up</Button>
         <br/> <br/>
         <AltButton>Learn More</AltButton>
       </div>
       <div class="img-container">
         <img class="img" src="/images/a.jpg"/>
-        <div class="content">This student built an automatic water machine for his plants.</div>
+        <div class="content">This student built an automatic watering machine for his plants.</div>
       </div>
+    </div>
+  </div>
+  <div class="about-page">
+    <div class="images">
+      <img class="img img-1" src="/images/work1.jpg"/>
+      <img class="img img-2" src="/images/work2.jpg"/>
+    </div>
+    <div class="about-section">
+      <div class="header blue">What is RoboZone?</div>
+      <div class="content">
+        RoboZone is an organization that runs programs to teach students important computer science, engineering, and robotics principles.
+        Our course caters to both beginner and advanced students.
+        <br /> <br />
+        Students learn how to use breadboards, transistors, capacitors, resistors, and more to create their own projects.
+        We teach them how to control these components using Arduinos, which they program in C++.
+        <br /> <br />
+        Once they have their basics covered, we teach them more advanced topics, like how to control voltage and current,
+        and let them design their own project. For their final project, they combine 3D printing, electrical engineering,
+        and programming to create anything they wish.
+      </div>
+    <div class="images images-2">
+      <img class="img img-1" src="/images/work1.jpg"/>
+      <img class="img img-2" src="/images/work2.jpg"/>
+    </div>
     </div>
   </div>
 
 
   <!-- JavaScript -->
   <script>
-    import createScrollSnap from 'scroll-snap';
     const element = document.body;
-    const home = document.querySelector(".home");
-    const about = document.querySelector(".about");
-    const support = document.querySelector(".support");
-    const hero = document.querySelector('.hero'); 
-    const aboutSection = document.querySelector(".about-section");
-    const teamSection = document.querySelector(".team-section");
-    const navbar = document.querySelector('.navbar'); 
-    const signup = document.querySelectorAll('.signup');
-    const params = new URLSearchParams(window.location.search);
+    const signups = document.querySelectorAll(".signup");
 
-    /* NAVIGATION FUNCTIONS */
-    const navHero = () => {
-      navbar.classList.add("nav-hero");
-      navbar.classList.remove("nav");
-      document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-      home.classList.add("nav-select");
-      history.replaceState({}, "home", "/");
-    };
-    const navAbout = () => {
-      navbar.classList.add("nav");
-      navbar.classList.remove("nav-hero");
-      document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-      about.classList.add("nav-select");
-      history.replaceState({}, "about", "/?page=about");
-    };
-
-    const navSupport = () => {
-      navbar.classList.add("nav");
-      navbar.classList.remove("nav-hero");
-      document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("nav-select"));
-      support.classList.add("nav-select");
-      history.replaceState({}, "support", "/?page=support");
-    };
-
-    /* EVENT LISTENERS */
-    home.addEventListener("click", () => {
-      hero.scrollIntoView({ behavior: "smooth" });
-      navUpdate();
-    });
-
-    about.addEventListener("click", () => {
-      aboutSection.scrollIntoView({ behavior: "smooth" });
-      navAbout();
-    });
-
-    support.addEventListener("click", () => {
-      document.querySelector(".support-section").scrollIntoView({ behavior: "smooth" });
-      navSupport();
-    });
-
-    signup.forEach((el) => el.addEventListener("click", () => {
+    signups.forEach((el) => el.addEventListener("click", () => {
       window.location.href = "/signup";
     }));
     document.querySelector(".btn-donate").addEventListener("click", () => {
