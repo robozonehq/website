@@ -1,0 +1,232 @@
+/* RoboZone Global Styles */
+
+/* Font Imports */
+@font-face {
+    font-family: "Signwood";
+    src: url("/fonts/Signwood.ttf"), url("/fonts/SignwoodItalic.ttf");
+    font-display: swap;
+}
+
+/* Variables */
+:root {
+    /* Colors */
+    --primary: #53c1ff;
+    --secondary: #ffd253;
+    --accent: #79e486;
+    --dark: #000000;
+    --light: #ffffff;
+    --gray-light: #f5f5f5;
+    --gray: #dddddd;
+    --gray-dark: #666666;
+
+    /* Shadows */
+    --shadow-sm: 3px 3px 0px var(--dark);
+    --shadow-md: 5px 5px 0px var(--secondary);
+    --shadow-lg: 8px 8px 0px var(--secondary);
+}
+
+/* Base Resets */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    scroll-behavior: smooth;
+    font-family: "DM Sans Variable", system-ui, sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    line-height: 1.5;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Signwood", sans-serif;
+    font-style: italic;
+    font-weight: normal;
+    line-height: 1.1;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Underlined Text Effect */
+.underlined {
+    display: inline-block;
+    border-bottom: 0.25em solid var(--secondary);
+    line-height: 0.8;
+    padding: 0 0.25rem;
+}
+
+.underlined.blue {
+    border-bottom-color: var(--primary);
+}
+
+.underlined.green {
+    border-bottom-color: var(--accent);
+}
+
+/* Utility Classes */
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.gap-sm {
+    gap: 0.5rem;
+}
+
+.gap-md {
+    gap: 1rem;
+}
+
+.gap-lg {
+    gap: 1.5rem;
+}
+
+/* Section Styles */
+.section {
+    padding: 3rem 0;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+}

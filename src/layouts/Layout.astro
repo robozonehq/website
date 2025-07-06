@@ -1,51 +1,147 @@
 ---
+import '@fontsource-variable/dm-sans';
+
 interface Props {
 	title: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const {
+	title,
+	description = "RoboZone teaches students robotics, engineering, programming, and design through fun and engaging courses."
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+
+		<!-- Preload fonts -->
+		<link rel="preload" href="/fonts/Signwood.ttf" as="font" type="font/ttf" crossorigin />
+		<link rel="preload" href="/fonts/SignwoodItalic.ttf" as="font" type="font/ttf" crossorigin />
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
+
 <style is:global>
+	/* Base reset */
+	*, *::before, *::after {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	/* Font loading */
+	@font-face {
+		font-family: "Signwood";
+		src: url("/fonts/Signwood.ttf"), url("/fonts/SignwoodItalic.ttf");
+		font-display: swap;
+	}
+
+	/* Base styles */
 	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+		--primary: #53C1FF;
+		--secondary: #FFD253;
+		--accent: #79e486;
+		--dark: #000000;
+		--light: #ffffff;
+		--gray: #f5f5f5;
+		--gray-light: #e9e9e9;
+		--gray-dark: #666666;
+		--transition: all 0.3s ease;
 	}
+
 	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
+		font-family: "DM Sans Variable", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+		font-size: 16px;
+		line-height: 1.5;
+		color: var(--dark);
+		scroll-behavior: smooth;
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+
+	body {
+		min-height: 100vh;
+		overflow-x: hidden;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	button {
+		cursor: pointer;
+		font-family: inherit;
+	}
+
+	/* Typography */
+	h1, h2, h3, h4, h5, h6 {
+		font-family: "Signwood", sans-serif;
+		font-style: italic;
+		font-weight: normal;
+		line-height: 1.2;
+	}
+
+	p {
+		margin-bottom: 1rem;
+		line-height: 1.6;
+	}
+
+	/* Utility classes */
+	.container {
+		width: 100%;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	.highlight {
+		display: inline-block;
+		position: relative;
+		z-index: 1;
+	}
+
+	.highlight:after {
+		content: '';
+		position: absolute;
+		bottom: 4px;
+		left: 0;
+		height: 10px;
+		width: 100%;
+		background: var(--secondary);
+		z-index: -1;
+	}
+
+	.highlight.blue:after {
+		background: var(--primary);
+	}
+
+	.highlight.green:after {
+		background: var(--accent);
+	}
+
+	/* Responsive styles */
+	@media (max-width: 768px) {
+		.container {
+			padding: 0 16px;
+		}
 	}
 </style>
