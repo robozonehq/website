@@ -7,7 +7,8 @@ import dmSansLatin from "@fontsource-variable/dm-sans/files/dm-sans-latin-wght-n
 
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { site } from "../data/site";
+import { site, brand, team } from "../data/site";
+import { graph, organization, website } from "../lib/seo";
 
 interface Props {
   title: string;
@@ -15,6 +16,9 @@ interface Props {
   image?: string;
   imageAlt?: string;
   noindex?: boolean;
+  crumb?: string;
+  pageType?: string;
+  schema?: Record<string, unknown>[];
 }
 
 const {
@@ -23,12 +27,45 @@ const {
   image = "/og-image.jpg",
   imageAlt = "A RoboZone student holds up a wired project, surrounded by mentors in RoboZone shirts.",
   noindex = false,
+  crumb,
+  pageType,
+  schema = [],
 } = Astro.props;
 
 const siteUrl = Astro.site ?? new URL(site.url);
+const origin = siteUrl.href.replace(/\/$/, "");
 const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const canonical = new URL(path, siteUrl).href;
 const ogImage = new URL(image, siteUrl).href;
+
+const structuredData = noindex
+  ? null
+  : graph(
+      {
+        siteUrl: origin,
+        canonical,
+        title,
+        description,
+        image: ogImage,
+        pageType,
+        crumbs: path === "/" ? undefined : [{ name: "Home", path: "/" }, { name: crumb ?? title, path }],
+        extra: schema,
+      },
+      organization(origin, {
+        name: site.name,
+        alternateNames: [...brand.alternateNames],
+        email: site.email,
+        description: site.description,
+        founded: site.founded,
+        slogan: brand.slogan,
+        locality: brand.locality,
+        region: brand.region,
+        country: brand.country,
+        knowsAbout: [...brand.knowsAbout],
+        team: team.map((p) => ({ name: p.name, role: p.role })),
+      }),
+      website(origin, site.name, [...brand.alternateNames], site.description),
+    );
 ---
 
 <!doctype html>
@@ -39,15 +76,31 @@ const ogImage = new URL(image, siteUrl).href;
     <script is:inline>document.documentElement.classList.add("js");</script>
     <title>{title}</title>
     <meta name="description" content={description} />
-    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    {
+      noindex ? (
+        <meta name="robots" content="noindex" />
+      ) : (
+        <>
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+          <link rel="canonical" href={canonical} />
+        </>
+      )
+    }
 
-    <link rel="icon" href="/images/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#f6f4ef" />
+    <meta name="application-name" content="RoboZone" />
+    <meta name="apple-mobile-web-app-title" content="RoboZone" />
+    <meta name="author" content="RoboZone" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="RoboZone" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -57,6 +110,11 @@ const ogImage = new URL(image, siteUrl).href;
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    {structuredData && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 
     <link rel="preload" href={dmSansLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/SignwoodItalic.ttf" as="font" type="font/ttf" crossorigin />

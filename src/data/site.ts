@@ -18,6 +18,23 @@ export const site = {
   mission: "Student-led robotics education: younger students learn electronics, programming, and design by building real projects.",
 } as const;
 
+export const brand = {
+  alternateNames: ["Robo Zone", "RoboZone NJ"],
+  slogan: "Build a circuit. Write the code. See it work.",
+  locality: "South Brunswick",
+  region: "NJ",
+  country: "US",
+  knowsAbout: [
+    "Robotics education",
+    "Electronics",
+    "Arduino",
+    "C++ programming",
+    "Computer-aided design",
+    "3D printing",
+    "Circuit simulation",
+  ],
+} as const;
+
 export const links = {
   donate: "https://hcb.hackclub.com/donations/start/robozone",
   hackClub: "https://hackclub.com/",

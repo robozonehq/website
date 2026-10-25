@@ -28,11 +28,34 @@ import { allAvailability, enrollFaq } from "../lib/programs";
 import { todayISO } from "../lib/registration";
 
 const a = allAvailability(offerings, sessions, todayISO());
+const siteUrl = (Astro.site ?? new URL(site.url)).href.replace(/\/$/, "");
+const courseSchema = {
+  "@type": "Course",
+  "@id": `${siteUrl}/program#in-person-course`,
+  name: "RoboZone in-person robotics course",
+  description: inPersonCourse.summary,
+  url: `${siteUrl}/program#in-person`,
+  provider: { "@id": `${siteUrl}/#organization` },
+  inLanguage: "en",
+  educationalLevel: inPersonCourse.facts.audience,
+  coursePrerequisites: "No experience needed",
+  timeRequired: `P${inPersonCourse.weeks}W`,
+  teaches: [
+    "Electronics and breadboard circuits",
+    "Voltage, current, resistance, and Ohm's law",
+    "Arduino programming in C++",
+    "Servo motors and transistors",
+    "Computer-aided design in Onshape",
+    "3D printing",
+  ],
+};
 const generalItems = [faqGeneral[0], faqGeneral[1], enrollFaq(a.inPerson, a.online), ...faqGeneral.slice(2)];
 ---
 
 <Layout
-  title="Programs | RoboZone"
+  title="Programs | RoboZone robotics courses"
+  crumb="Programs"
+  schema={[courseSchema]}
   description="RoboZone's established in-person robotics course in South Brunswick, NJ (circuits, Arduino C++, CAD, and a final project), plus the free online workshops we're planning and the local branches we're exploring."
 >
   <PageHeader

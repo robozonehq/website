@@ -14,26 +14,12 @@ import { site, fiscalSponsor, faqGeneral, offerings, sessions } from "../data/si
 import { allAvailability, enrollFaq } from "../lib/programs";
 import { todayISO } from "../lib/registration";
 
-const siteUrl = (Astro.site ?? new URL(site.url)).href.replace(/\/$/, "");
 const a = allAvailability(offerings, sessions, todayISO());
 const faqItems = [faqGeneral[0], faqGeneral[1], enrollFaq(a.inPerson, a.online), ...faqGeneral.slice(2)];
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: site.name,
-  url: siteUrl,
-  logo: `${siteUrl}/images/logo.png`,
-  email: site.email,
-  description: site.description,
-  foundingDate: String(site.founded),
-  foundingLocation: { "@type": "Place", name: site.origin },
-};
 ---
 
-<Layout title="RoboZone | Student-led robotics education" description={site.description}>
+<Layout title="RoboZone | Student-led robotics education for kids" description={site.description}>
   <Fragment slot="head">
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>
       (function () {
         var page = new URLSearchParams(location.search).get("page");
@@ -46,7 +32,7 @@ const jsonLd = {
   <section class="hero">
     <div class="container hero__inner">
       <div class="hero__text">
-        <p class="annot">Student-led robotics education</p>
+        <p class="annot">RoboZone · Student-led robotics education</p>
         <h1>Build a circuit. Write the code. See it work.</h1>
         <p class="lede">
           RoboZone is a student-led initiative where younger students learn electronics, programming, and design by

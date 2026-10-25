@@ -6,6 +6,7 @@ const root = new URL("../", import.meta.url);
 const path = (p) => fileURLToPath(new URL(p, root));
 
 const logo = path("src/assets/brand/logo-padded.png");
+const favicon = path("src/assets/brand/logo-transparent.png");
 const photo = path("src/assets/photos/2024-summer-plant-watering-project.jpg");
 
 const GRADIENT_FROM = "#27a9ff";
@@ -22,6 +23,8 @@ const gradientSquare = (size) =>
   );
 
 const logoAt = (size) => sharp(logo).resize(size, size).png({ compressionLevel: 9 }).toBuffer();
+const faviconAt = (size) =>
+  sharp(favicon).resize(size, size, { kernel: "lanczos3" }).png({ compressionLevel: 9 }).toBuffer();
 
 const opaqueAt = async (size) =>
   sharp(gradientSquare(size))
@@ -29,29 +32,41 @@ const opaqueAt = async (size) =>
     .png({ compressionLevel: 9 })
     .toBuffer();
 
-await writeFile(path("public/images/logo.png"), await logoAt(512));
-
-await writeFile(path("public/favicon-32.png"), await logoAt(32));
-await writeFile(path("public/favicon-192.png"), await logoAt(192));
-await writeFile(path("public/apple-touch-icon.png"), await opaqueAt(180));
-
-{
-  const png = await logoAt(32);
+async function ico(sizes) {
+  const images = await Promise.all(sizes.map((s) => faviconAt(s)));
   const header = Buffer.alloc(6);
   header.writeUInt16LE(0, 0);
   header.writeUInt16LE(1, 2);
-  header.writeUInt16LE(1, 4);
-  const entry = Buffer.alloc(16);
-  entry.writeUInt8(32, 0);
-  entry.writeUInt8(32, 1);
-  entry.writeUInt8(0, 2);
-  entry.writeUInt8(0, 3);
-  entry.writeUInt16LE(1, 4);
-  entry.writeUInt16LE(32, 6);
-  entry.writeUInt32LE(png.length, 8);
-  entry.writeUInt32LE(6 + 16, 12);
-  await writeFile(path("public/images/favicon.ico"), Buffer.concat([header, entry, png]));
+  header.writeUInt16LE(sizes.length, 4);
+  let offset = 6 + 16 * sizes.length;
+  const entries = sizes.map((s, i) => {
+    const e = Buffer.alloc(16);
+    e.writeUInt8(s >= 256 ? 0 : s, 0);
+    e.writeUInt8(s >= 256 ? 0 : s, 1);
+    e.writeUInt8(0, 2);
+    e.writeUInt8(0, 3);
+    e.writeUInt16LE(1, 4);
+    e.writeUInt16LE(32, 6);
+    e.writeUInt32LE(images[i].length, 8);
+    e.writeUInt32LE(offset, 12);
+    offset += images[i].length;
+    return e;
+  });
+  return Buffer.concat([header, ...entries, ...images]);
 }
+
+await writeFile(path("public/images/logo.png"), await logoAt(512));
+
+const icoFile = await ico([16, 32, 48]);
+await writeFile(path("public/favicon.ico"), icoFile);
+await writeFile(path("public/images/favicon.ico"), icoFile);
+for (const size of [32, 48, 96, 192]) {
+  await writeFile(path(`public/favicon-${size}.png`), await faviconAt(size));
+}
+
+await writeFile(path("public/apple-touch-icon.png"), await opaqueAt(180));
+await writeFile(path("public/icon-512.png"), await opaqueAt(512));
+await writeFile(path("public/icon-192.png"), await opaqueAt(192));
 
 const meta = await sharp(photo).metadata();
 const cropHeight = Math.round(meta.width * (630 / 1200));
@@ -63,6 +78,4 @@ await sharp(photo)
   .jpeg({ quality: 82, mozjpeg: true })
   .toFile(path("public/og-image.jpg"));
 
-console.log(
-  "Wrote public/images/logo.png, public/images/favicon.ico, public/favicon-32.png, public/favicon-192.png, public/apple-touch-icon.png, public/og-image.jpg",
-);
+console.log("Wrote favicons (transparent), touch and app icons, logo.png, and og-image.jpg in /public");

@@ -1,4 +1,5 @@
-/// <reference path="../.astro/types.d.ts" />
+type AstroTypesReference = '/// <reference path="../.astro/types.d.ts" />';
+
 interface ImportMetaEnv {
   readonly PUBLIC_POCKETBASE_URL?: string;
 }

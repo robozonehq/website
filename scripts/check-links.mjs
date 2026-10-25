@@ -52,7 +52,7 @@ for (const [route, { html }] of pages) {
   for (const m of html.matchAll(/\shref="([^"]+)"/g)) {
     const href = m[1];
     if (/^(https?:|mailto:|tel:)/.test(href)) continue;
-    if (href.startsWith("/_astro/") || href.startsWith("/fonts/") || /\.(png|ico|jpg|svg|woff2?|ttf|css|xml|txt)$/.test(href)) {
+    if (href.startsWith("/_astro/") || href.startsWith("/fonts/") || /\.(png|ico|jpg|svg|woff2?|ttf|css|xml|txt|webmanifest)$/.test(href)) {
       const asset = join(root, href.split("#")[0].split("?")[0]);
       if (!(await exists(asset)) && !href.startsWith("/sitemap")) problems.push(`${route}: missing asset ${href}`);
       continue;
