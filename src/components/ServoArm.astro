@@ -1,0 +1,521 @@
+---
+import { ARM, REST, arcPath, servoValues } from "../lib/servo-arm";
+
+const start = servoValues(REST);
+const holes = (length: number, from: number) =>
+  Array.from({ length: Math.floor((length - from * 2) / 20) + 1 }, (_, i) => from + i * 20);
+const benchTicks = Array.from({ length: 31 }, (_, i) => 10 + i * 20);
+const breadboardHoles = Array.from({ length: 13 }, (_, i) => 56 + i * 10);
+---
+
+<section class="arm-band" aria-labelledby="arm-heading">
+  <div class="container arm" data-servo-arm>
+    <div class="arm__intro">
+      <p class="annot">Try it · An on-screen illustration</p>
+      <h2 id="arm-heading">Point anywhere. The arm follows.</h2>
+      <p class="arm__lede">
+        This arm has two servo motors: one at the shoulder and one at the elbow. A servo turns to whatever angle it's
+        given, from 0° to 180°. In our in-person workshops, students wire and program real servos the same way.
+      </p>
+    </div>
+
+    <div class="arm__details">
+      <figure class="arm__code">
+        <figcaption class="annot annot--plain">Arduino code for this pose</figcaption>
+        <pre><code><span class="tok-obj">shoulder</span>.<span class="tok-fn">write</span>(<span class="tok-num" data-out="shoulder">{start.shoulder}</span>);
+<span class="tok-obj">elbow</span>.<span class="tok-fn">write</span>(<span class="tok-num" data-out="elbow">{start.elbow}</span>);
+<span class="tok-obj">gripper</span>.<span class="tok-fn">write</span>(<span class="tok-num" data-out="gripper">90</span>);</code></pre>
+      </figure>
+
+      <div class="arm__controls">
+        <button type="button" class="btn btn--secondary btn--small" data-grip aria-pressed="false">
+          Close the gripper
+        </button>
+        <p class="arm__hint" id="arm-hint">
+          Move your cursor, or tap the bench. Elbow at 90 means the arm is straight. With a keyboard, select the bench and use the arrow keys.
+        </p>
+      </div>
+      <p class="visually-hidden" aria-live="polite" data-live></p>
+    </div>
+
+    <div
+      class="arm__stage"
+      tabindex="0"
+      role="group"
+      aria-label="Two-servo robot arm. Left and Right arrows turn the shoulder, Up and Down bend the elbow, Space opens or closes the gripper."
+      aria-describedby="arm-hint"
+    >
+      <svg viewBox="0 0 640 400" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="arm-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#27a9ff"></stop>
+            <stop offset="1" stop-color="#69b3e8"></stop>
+          </linearGradient>
+        </defs>
+
+        <rect class="bench" x="0" y="356" width="640" height="44"></rect>
+        <line class="bench-edge" x1="0" y1="356" x2="640" y2="356"></line>
+        {benchTicks.map((x, i) => <line class="tick" x1={x} y1="356" x2={x} y2={i % 5 === 0 ? 366 : 361} />)}
+
+        <g class="part">
+          <rect class="breadboard" x="44" y="326" width="150" height="30" rx="3"></rect>
+          {breadboardHoles.map((x) => <circle class="bb-hole" cx={x} cy="336" r="1.6" />)}
+          {breadboardHoles.map((x) => <circle class="bb-hole" cx={x} cy="346" r="1.6" />)}
+        </g>
+
+        <g class="part">
+          <rect class="board" x="456" y="328" width="136" height="28" rx="4"></rect>
+          <rect class="chip" x="520" y="334" width="34" height="14" rx="2"></rect>
+          <rect class="header" x="466" y="331" width="40" height="6" rx="1"></rect>
+        </g>
+        <path class="cable cable--brown" d="M348 344 C 392 346, 430 330, 472 334"></path>
+        <path class="cable cable--red" d="M348 348 C 394 350, 434 334, 480 334"></path>
+        <path class="cable cable--orange" d="M348 352 C 396 354, 438 338, 488 334"></path>
+
+        <line class="ref" x1={ARM.base.x} y1={ARM.base.y} x2={ARM.base.x + 64} y2={ARM.base.y}></line>
+        <path
+          class="arc"
+          data-arc="shoulder"
+          transform={`translate(${ARM.base.x} ${ARM.base.y})`}
+          d={arcPath(46, 0, -REST.shoulder)}></path>
+
+        <rect class="servo" x="282" y="330" width="76" height="8" rx="2"></rect>
+        <rect class="servo" x="292" y="318" width="56" height="38" rx="6"></rect>
+
+        <g data-joint="upper" transform={`translate(${ARM.base.x} ${ARM.base.y}) rotate(${-REST.shoulder})`}>
+          <rect class="link" x="-15" y="-14" width={ARM.upper + 30} height="28" rx="14"></rect>
+          {holes(ARM.upper, 30).map((x) => <circle class="link-hole" cx={x} cy="0" r="3" />)}
+
+          <line class="ref" x1={ARM.upper} y1="0" x2={ARM.upper + 52} y2="0"></line>
+          <path
+            class="arc"
+            data-arc="elbow"
+            transform={`translate(${ARM.upper} 0)`}
+            d={arcPath(34, 0, -REST.bend)}></path>
+
+          <g data-joint="fore" transform={`translate(${ARM.upper} 0) rotate(${-REST.bend})`}>
+            <rect class="servo" x="-18" y="-16" width="36" height="32" rx="5"></rect>
+            <rect class="link" x="-12" y="-11" width={ARM.fore + 16} height="22" rx="11"></rect>
+            {holes(ARM.fore, 32).map((x) => <circle class="link-hole" cx={x} cy="0" r="2.6" />)}
+
+            <g transform={`translate(${ARM.fore} 0)`}>
+              <rect class="palm" x="-2" y="-15" width="14" height="30" rx="3"></rect>
+              <g data-finger="top" transform="translate(10 -10) rotate(-24)">
+                <rect class="finger" x="0" y="-3.5" width="28" height="7" rx="3.5"></rect>
+              </g>
+              <g data-finger="bottom" transform="translate(10 10) rotate(24)">
+                <rect class="finger" x="0" y="-3.5" width="28" height="7" rx="3.5"></rect>
+              </g>
+            </g>
+
+            <circle class="pad" r="10"></circle>
+            <circle class="pad-hole" r="3.2"></circle>
+          </g>
+
+          <circle class="pad" r="11"></circle>
+          <circle class="pad-hole" r="3.5"></circle>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .arm-band {
+    padding-block: var(--space-8) 0;
+  }
+
+  .arm {
+    display: grid;
+    grid-template-areas: "intro" "stage" "details";
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  .arm__intro,
+  .arm__details {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    max-width: 30rem;
+  }
+
+  .arm__intro {
+    grid-area: intro;
+  }
+
+  .arm__details {
+    grid-area: details;
+  }
+
+  .arm__stage {
+    grid-area: stage;
+  }
+
+  .arm__lede {
+    color: var(--color-text-muted);
+  }
+
+  .arm__code {
+    display: grid;
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .arm__code pre {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-dark-bg);
+    color: var(--color-dark-text);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  .tok-obj {
+    color: var(--color-dark-text);
+  }
+
+  .tok-fn {
+    color: var(--brand-sky);
+  }
+
+  .tok-num {
+    color: var(--brand-yellow);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .arm__controls {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+
+  .arm__hint {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .arm__stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 8 / 5;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    background-image: radial-gradient(circle, #ddd8cc 1.3px, transparent 1.5px);
+    background-size: 20px 20px;
+    background-position: 10px 10px;
+    touch-action: pan-y;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .arm__stage:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+
+  .arm__stage svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bench {
+    fill: var(--color-surface-sunken);
+  }
+
+  .bench-edge {
+    stroke: var(--color-text);
+    stroke-width: 2;
+  }
+
+  .tick {
+    stroke: var(--color-border-strong);
+    stroke-width: 1;
+  }
+
+  .breadboard {
+    fill: #fbfaf7;
+    stroke: var(--color-border-strong);
+    stroke-width: 1.5;
+  }
+
+  .bb-hole {
+    fill: var(--color-border-strong);
+  }
+
+  .board {
+    fill: #2c4a52;
+    stroke: var(--color-text);
+    stroke-width: 1.5;
+  }
+
+  .chip {
+    fill: #15181b;
+  }
+
+  .header {
+    fill: #15181b;
+  }
+
+  .cable {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  .cable--brown {
+    stroke: #7a4a2a;
+  }
+
+  .cable--red {
+    stroke: #c8372d;
+  }
+
+  .cable--orange {
+    stroke: #f08a24;
+  }
+
+  .ref {
+    stroke: var(--color-border-strong);
+    stroke-width: 1.25;
+    stroke-dasharray: 3 4;
+  }
+
+  .arc {
+    fill: none;
+    stroke: var(--brand-blue);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+  }
+
+  .servo,
+  .palm {
+    fill: #23272c;
+  }
+
+  .link {
+    fill: url(#arm-grad);
+    stroke: var(--color-text);
+    stroke-width: 2;
+  }
+
+  .link-hole {
+    fill: #eef8ff;
+    stroke: var(--color-text);
+    stroke-width: 1;
+  }
+
+  .finger {
+    fill: #23272c;
+  }
+
+  .pad {
+    fill: var(--brand-yellow);
+    stroke: var(--color-text);
+    stroke-width: 2;
+  }
+
+  .pad-hole {
+    fill: var(--color-text);
+  }
+
+  @media (min-width: 64rem) {
+    .arm {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
+      grid-template-areas:
+        "intro stage"
+        "details stage";
+      gap: var(--space-5) var(--space-8);
+      align-items: start;
+    }
+
+    .arm__stage {
+      align-self: center;
+    }
+  }
+</style>
+
+<script>
+  import { ARM, FOLDED, REST, arcPath, servoValues, solve, type Config, type Pose } from "../lib/servo-arm";
+
+  const root = document.querySelector<HTMLElement>("[data-servo-arm]");
+  const svg = root?.querySelector("svg");
+
+  if (root && svg) {
+    const stage = root.querySelector<HTMLElement>(".arm__stage")!;
+    const upper = svg.querySelector<SVGGElement>('[data-joint="upper"]')!;
+    const fore = svg.querySelector<SVGGElement>('[data-joint="fore"]')!;
+    const fingerTop = svg.querySelector<SVGGElement>('[data-finger="top"]')!;
+    const fingerBottom = svg.querySelector<SVGGElement>('[data-finger="bottom"]')!;
+    const arcShoulder = svg.querySelector<SVGPathElement>('[data-arc="shoulder"]')!;
+    const arcElbow = svg.querySelector<SVGPathElement>('[data-arc="elbow"]')!;
+    const out = {
+      shoulder: root.querySelector<HTMLElement>('[data-out="shoulder"]')!,
+      elbow: root.querySelector<HTMLElement>('[data-out="elbow"]')!,
+      gripper: root.querySelector<HTMLElement>('[data-out="gripper"]')!,
+    };
+    const gripButton = root.querySelector<HTMLButtonElement>("[data-grip]")!;
+    const live = root.querySelector<HTMLElement>("[data-live]")!;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const GRIP_OPEN = 24;
+    const GRIP_CLOSED = 3;
+    const SERVO_OPEN = 90;
+    const SERVO_CLOSED = 30;
+
+    const current: Pose & { grip: number } = { ...REST, grip: GRIP_OPEN };
+    const target: Pose & { grip: number } = { ...REST, grip: GRIP_OPEN };
+    let config: Config = "right";
+    let gripClosed = false;
+    let raf = 0;
+    let lastTime = 0;
+    let shown = { shoulder: -1, elbow: -1, gripper: -1 };
+
+    const render = () => {
+      upper.setAttribute("transform", `translate(${ARM.base.x} ${ARM.base.y}) rotate(${(-current.shoulder).toFixed(2)})`);
+      fore.setAttribute("transform", `translate(${ARM.upper} 0) rotate(${(-current.bend).toFixed(2)})`);
+      fingerTop.setAttribute("transform", `translate(10 -10) rotate(${(-current.grip).toFixed(2)})`);
+      fingerBottom.setAttribute("transform", `translate(10 10) rotate(${current.grip.toFixed(2)})`);
+      arcShoulder.setAttribute("d", arcPath(46, 0, -current.shoulder));
+      arcElbow.setAttribute("d", arcPath(34, 0, -current.bend));
+
+      const values = servoValues(current);
+      const gripper = Math.round(
+        SERVO_CLOSED + ((current.grip - GRIP_CLOSED) / (GRIP_OPEN - GRIP_CLOSED)) * (SERVO_OPEN - SERVO_CLOSED),
+      );
+      if (values.shoulder !== shown.shoulder) out.shoulder.textContent = String(values.shoulder);
+      if (values.elbow !== shown.elbow) out.elbow.textContent = String(values.elbow);
+      if (gripper !== shown.gripper) out.gripper.textContent = String(gripper);
+      shown = { shoulder: values.shoulder, elbow: values.elbow, gripper };
+    };
+
+    const tick = (time: number) => {
+      const dt = Math.min(0.05, (time - lastTime) / 1000);
+      lastTime = time;
+      const k = reduceMotion.matches ? 1 : 1 - Math.exp(-dt / 0.13);
+      current.shoulder += (target.shoulder - current.shoulder) * k;
+      current.bend += (target.bend - current.bend) * k;
+      current.grip += (target.grip - current.grip) * k;
+      const settled =
+        Math.abs(target.shoulder - current.shoulder) < 0.05 &&
+        Math.abs(target.bend - current.bend) < 0.05 &&
+        Math.abs(target.grip - current.grip) < 0.05;
+      if (settled) Object.assign(current, target);
+      render();
+      raf = settled ? 0 : requestAnimationFrame(tick);
+    };
+
+    const kick = () => {
+      if (raf) return;
+      lastTime = performance.now();
+      raf = requestAnimationFrame(tick);
+    };
+
+    const setPose = (pose: Pose) => {
+      target.shoulder = pose.shoulder;
+      target.bend = pose.bend;
+      kick();
+    };
+
+    const aimAt = (clientX: number, clientY: number) => {
+      const ctm = svg.getScreenCTM();
+      if (!ctm) return;
+      const p = new DOMPoint(clientX, clientY).matrixTransform(ctm.inverse());
+      const result = solve(p.x, p.y, config);
+      config = result.config;
+      setPose(result.pose);
+    };
+
+    const setGrip = (closed: boolean) => {
+      gripClosed = closed;
+      target.grip = closed ? GRIP_CLOSED : GRIP_OPEN;
+      gripButton.setAttribute("aria-pressed", String(closed));
+      gripButton.textContent = closed ? "Open the gripper" : "Close the gripper";
+      kick();
+    };
+
+    let restTimer = 0;
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      window.clearTimeout(restTimer);
+      aimAt(event.clientX, event.clientY);
+    };
+    const restSoon = () => {
+      window.clearTimeout(restTimer);
+      restTimer = window.setTimeout(() => setPose(REST), 600);
+    };
+
+    let introduced = false;
+    if (!reduceMotion.matches) {
+      Object.assign(current, FOLDED, { grip: GRIP_OPEN });
+      render();
+    }
+
+    new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          window.addEventListener("pointermove", onPointerMove, { passive: true });
+          document.documentElement.addEventListener("pointerleave", restSoon);
+          if (!introduced) {
+            introduced = true;
+            setPose(REST);
+          }
+        } else {
+          window.removeEventListener("pointermove", onPointerMove);
+          document.documentElement.removeEventListener("pointerleave", restSoon);
+        }
+      },
+      { threshold: 0.35 },
+    ).observe(stage);
+
+    let touching = false;
+    stage.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "touch") return;
+      touching = true;
+      aimAt(event.clientX, event.clientY);
+    });
+    stage.addEventListener("pointermove", (event) => {
+      if (touching && event.pointerType === "touch") aimAt(event.clientX, event.clientY);
+    });
+    const endTouch = () => (touching = false);
+    stage.addEventListener("pointerup", endTouch);
+    stage.addEventListener("pointercancel", endTouch);
+
+    stage.addEventListener("click", (event) => {
+      if ((event as PointerEvent).pointerType === "touch") return;
+      setGrip(!gripClosed);
+    });
+    gripButton.addEventListener("click", () => setGrip(!gripClosed));
+
+    let announceTimer = 0;
+    const announce = () => {
+      window.clearTimeout(announceTimer);
+      announceTimer = window.setTimeout(() => {
+        const v = servoValues(target);
+        live.textContent = `Shoulder ${v.shoulder} degrees, elbow ${v.elbow} degrees, gripper ${gripClosed ? "closed" : "open"}.`;
+      }, 400);
+    };
+    stage.addEventListener("keydown", (event) => {
+      const step = event.shiftKey ? 15 : 5;
+      const keys: Record<string, () => void> = {
+        ArrowLeft: () => setPose({ ...target, shoulder: Math.min(180, target.shoulder + step) }),
+        ArrowRight: () => setPose({ ...target, shoulder: Math.max(0, target.shoulder - step) }),
+        ArrowUp: () => setPose({ ...target, bend: Math.min(90, target.bend + step) }),
+        ArrowDown: () => setPose({ ...target, bend: Math.max(-90, target.bend - step) }),
+        " ": () => setGrip(!gripClosed),
+        Enter: () => setGrip(!gripClosed),
+      };
+      const action = keys[event.key];
+      if (!action) return;
+      event.preventDefault();
+      action();
+      announce();
+    });
+  }
+</script>

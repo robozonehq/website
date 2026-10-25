@@ -1,0 +1,237 @@
+---
+import { Picture } from "astro:assets";
+import WorkshopPhoto from "./WorkshopPhoto.astro";
+import { builds } from "../data/site";
+import { photos, type PhotoKey } from "../data/photos";
+
+const gallery: PhotoKey[] = ["buildServoPanel", "buildWiredCase", "buildLedCase", "ballGame"];
+
+---
+
+<div class="work">
+  <div class="work__feature">
+    <WorkshopPhoto
+      photo="plantProject"
+      kind="Student project"
+      aspect="4 / 3"
+      aspectSm="4 / 3"
+      sizes="(min-width: 64rem) 640px, 100vw"
+      widths={[480, 800, 1200, 1600]}
+    />
+    <div class="work__feature-text">
+      <h3 class="work__title">The final project</h3>
+      <p>
+        The in-person course ends with a project that brings together 3D-printed parts, a circuit, and code. Students
+        present what they built. One student built a machine that waters a plant automatically.
+      </p>
+    </div>
+  </div>
+
+  <div class="work__gallery">
+    <p class="annot">More student builds from past sessions</p>
+    <ul role="list" class="gallery">
+      {
+        gallery.map((key) => {
+          const p = photos[key];
+          return (
+            <li class="gallery__item">
+              <figure>
+                <div class="gallery__frame">
+                  <Picture
+                    src={p.src}
+                    alt={p.alt}
+                    widths={[360, 560, 800]}
+                    width={800}
+                    sizes="(min-width: 64rem) 280px, (min-width: 40rem) 45vw, 90vw"
+                    formats={["avif", "webp"]}
+                    fallbackFormat="jpg"
+                    quality={72}
+                    loading="lazy"
+                    style={`object-position:${p.position ?? "50% 50%"}`}
+                  />
+                </div>
+                <figcaption>
+                  <span class="annot annot--plain">{p.session}</span>
+                  <span>{p.caption}</span>
+                </figcaption>
+              </figure>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+
+  <div class="work__builds">
+    <p class="annot">Built in the in-person course</p>
+    <ol role="list" class="work__list">
+      {
+        builds.map((build, i) => (
+          <li class="work__build">
+            <span class="work__num" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h3>{build.title}</h3>
+              <p>{build.body}</p>
+              <p class="work__concepts">
+                <span class="visually-hidden">Concepts: </span>
+                {build.concepts.join(" / ")}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</div>
+
+<style>
+  .work {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .work__feature {
+    display: grid;
+    gap: var(--space-6);
+    align-items: end;
+  }
+
+  .work__feature-text {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 32rem;
+  }
+
+  .work__title {
+    font-size: var(--text-xl);
+  }
+
+  .work__feature-text p {
+    color: var(--color-dark-muted);
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  .gallery figure {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .gallery__frame {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-dark-border);
+    background: var(--color-dark-surface);
+  }
+
+  .gallery__frame :global(picture) {
+    display: contents;
+  }
+
+  .gallery__frame :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gallery figcaption {
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: var(--color-dark-muted);
+  }
+
+  .work__gallery {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (max-width: 64rem) {
+    .gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .work__builds {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .work__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--color-dark-border);
+  }
+
+  .work__build {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-5) var(--space-5) 0;
+    border-bottom: 1px solid var(--color-dark-border);
+  }
+
+  .work__build:nth-child(odd) {
+    border-right: 1px solid var(--color-dark-border);
+  }
+
+  .work__build:nth-child(even) {
+    padding-left: var(--space-5);
+  }
+
+  .work__num {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--brand-yellow);
+    padding-top: 0.2em;
+  }
+
+  .work__build h3 {
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-2);
+  }
+
+  .work__build p {
+    color: var(--color-dark-muted);
+    font-size: var(--text-sm);
+  }
+
+  .work__concepts {
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 64rem) {
+    .work__feature {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: var(--space-7);
+    }
+  }
+
+  @media (max-width: 44rem) {
+    .work__list {
+      grid-template-columns: 1fr;
+    }
+
+    .work__build:nth-child(odd) {
+      border-right: 0;
+    }
+
+    .work__build:nth-child(even) {
+      padding-left: 0;
+    }
+  }
+</style>

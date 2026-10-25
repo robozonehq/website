@@ -1,0 +1,28 @@
+---
+import Photo from "./Photo.astro";
+import { photos, type PhotoKey } from "../data/photos";
+
+interface Props {
+  photo: PhotoKey;
+  kind?: string;
+  caption?: string;
+  aspect?: string;
+  aspectSm?: string;
+  sizes?: string;
+  widths?: number[];
+  eager?: boolean;
+  class?: string;
+}
+
+const { photo, kind = "In-person workshop", caption, ...rest } = Astro.props;
+const p = photos[photo];
+---
+
+<Photo
+  src={p.src}
+  alt={p.alt}
+  label={`${kind} · ${p.session}`}
+  caption={caption ?? p.caption}
+  position={p.position}
+  {...rest}
+/>

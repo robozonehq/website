@@ -1,0 +1,80 @@
+---
+import { onlineWorkshops } from "../data/site";
+
+interface Props {
+  activities?: boolean;
+}
+
+const { activities = false } = Astro.props;
+---
+
+<div class="plan">
+  <p class="annot annot--plain">Decided</p>
+  <dl class="facts">
+    {
+      onlineWorkshops.decided.map((row) => (
+        <div>
+          <dt>{row.term}</dt>
+          <dd>
+            {row.value}
+            <small>{row.note}</small>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+  {
+    activities && (
+      <div class="plan__activities">
+        <h3>What students will do</h3>
+        <ul role="list">
+          {onlineWorkshops.activities.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+        <p class="muted">Everything is done on a computer. There's no physical circuit building, assembly, or 3D printing.</p>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .plan {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .plan__activities {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .plan__activities h3 {
+    font-size: 1.125rem;
+  }
+
+  .plan__activities ul {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .plan__activities li {
+    display: grid;
+    grid-template-columns: 0.75rem 1fr;
+    gap: var(--space-3);
+    align-items: baseline;
+  }
+
+  .plan__activities li::before {
+    content: "";
+    width: 0.5rem;
+    height: 2px;
+    background: var(--color-text);
+    transform: translateY(-0.3em);
+  }
+
+  .plan__activities .muted {
+    font-size: var(--text-sm);
+  }
+</style>

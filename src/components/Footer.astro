@@ -1,0 +1,171 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { site, links, fiscalSponsor, mailto } from "../data/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer on-dark">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__about">
+        <Logo tone="dark" />
+        <p>{site.mission}</p>
+        <p class="site-footer__meta">
+          <span class="annot annot--plain">Founded in {site.origin}</span>
+        </p>
+        <a class="site-footer__email" href={mailto()}>
+          <Icon name="mail" />
+          {site.email}
+        </a>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer">
+        <div>
+          <h2 class="site-footer__heading">Programs</h2>
+          <ul role="list">
+            <li><a href="/program">All programs</a></li>
+            <li><a href="/program#in-person">In-person course</a></li>
+            <li><a href="/program#online">Online classes</a></li>
+            <li><a href="/signup">Program updates</a></li>
+            <li><a href="/program#faq">Questions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">RoboZone</h2>
+          <ul role="list">
+            <li><a href="/about">About</a></li>
+            <li><a href="/about#team">Team</a></li>
+            <li><a href="/get-involved#mentor">Mentor with us</a></li>
+            <li><a href="/get-involved#partner">Partner with us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Support</h2>
+          <ul role="list">
+            <li>
+              <a href={links.donate} rel="noopener">Donate on HCB <Icon name="external" /><span class="visually-hidden"> (opens HCB)</span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>
+        RoboZone is fiscally sponsored by <a href={links.hackClub} rel="noopener">{fiscalSponsor.name}</a>, a
+        501(c)(3) nonprofit.
+      </p>
+      <p>&copy; {year} RoboZone</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-8) var(--space-6);
+    font-size: var(--text-sm);
+  }
+
+  .site-footer__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr);
+    gap: var(--space-7);
+  }
+
+  .site-footer__about {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    justify-items: start;
+    max-width: 26rem;
+  }
+
+  .site-footer__about p {
+    color: var(--color-dark-muted);
+    font-size: 1rem;
+  }
+
+  .site-footer__meta {
+    margin-top: calc(var(--space-2) * -1);
+  }
+
+  .site-footer__email {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .site-footer__email svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .site-footer__nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  .site-footer__heading {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-dark-muted);
+    margin-bottom: var(--space-3);
+  }
+
+  .site-footer__nav ul {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .site-footer__nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    min-height: 40px;
+    color: var(--color-dark-text);
+    text-decoration: none;
+  }
+
+  .site-footer__nav a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .site-footer__nav svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-dark-border);
+    color: var(--color-dark-muted);
+  }
+
+  @media (max-width: 52rem) {
+    .site-footer__top {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .site-footer__nav {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

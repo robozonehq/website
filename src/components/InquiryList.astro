@@ -1,0 +1,101 @@
+---
+import Icon from "./Icon.astro";
+import { mailto, offerings } from "../data/site";
+
+interface Props {
+  only?: Array<"local" | "online" | "mentor" | "host">;
+}
+
+const all = {
+  local: {
+    title: "Future in-person sessions",
+    body: "Ask when the next South Brunswick workshops might run.",
+    label: offerings["in-person"].inquiry.label,
+    subject: offerings["in-person"].inquiry.subject,
+  },
+  online: {
+    title: "Online classes",
+    body: "Tell us you're interested and where you're located. Our free online workshops haven't opened for registration yet.",
+    label: offerings.online.inquiry.label,
+    subject: offerings.online.inquiry.subject,
+  },
+  mentor: {
+    title: "Mentoring",
+    body: "High school students who'd like to help teach in-person workshops.",
+    label: "Email us about mentoring",
+    subject: "Mentoring with RoboZone",
+  },
+  host: {
+    title: "Hosting or a program in your community",
+    body: "Host workshops near South Brunswick, or discuss a possible future program somewhere else.",
+    label: "Discuss hosting or a local program",
+    subject: "Hosting or a RoboZone program in my community",
+  },
+};
+
+const { only = ["local", "online", "mentor", "host"] } = Astro.props;
+const items = only.map((key) => ({ key, ...all[key] }));
+---
+
+<ul role="list" class="inquiries">
+  {
+    items.map((item) => (
+      <li class="inquiries__item" id={`ask-${item.key}`}>
+        <div>
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+        </div>
+        <a class="btn btn--secondary btn--small" href={mailto(item.subject)}>
+          <Icon name="mail" /> {item.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>
+<p class="inquiries__note">
+  Emailing us is a question, not a registration. It doesn't reserve a spot or add you to a mailing list.
+</p>
+
+<style>
+  .inquiries {
+    display: grid;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .inquiries__item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-3) var(--space-6);
+    align-items: center;
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .inquiries__item h3 {
+    font-size: 1.0625rem;
+    margin-bottom: var(--space-1);
+  }
+
+  .inquiries__item p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    max-width: 40rem;
+  }
+
+  .inquiries__item .btn {
+    white-space: normal;
+  }
+
+  .inquiries__note {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 40rem) {
+    .inquiries__item {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+  }
+</style>

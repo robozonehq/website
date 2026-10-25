@@ -1,12 +1,12 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 import node from "@astrojs/node";
 
-// https://astro.build/config
 export default defineConfig({
-  output: "server",
+  site: process.env.SITE_URL || "https://robozone.world",
+  output: "hybrid",
   adapter: node({
-    mode: "standalone"
+    mode: "standalone",
   }),
+  devToolbar: { enabled: false },
 });
-

@@ -1,0 +1,151 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<figure class:list={["circuit", className]}>
+  <div class="circuit__board">
+    <svg
+      viewBox="0 0 420 230"
+      role="img"
+      aria-labelledby="circuit-title circuit-desc"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title id="circuit-title">LED circuit diagram</title>
+      <desc id="circuit-desc">
+        An Arduino output pin connects through a resistor to an LED. The LED connects back to the
+        Arduino's ground pin, completing the loop. The resistor limits the current through the LED.
+      </desc>
+
+      <rect class="block" x="10" y="28" width="92" height="186" rx="8" />
+      <text class="label label--strong" x="56" y="58" text-anchor="middle">ARDUINO</text>
+      <text class="label" x="94" y="85" text-anchor="end">PIN</text>
+      <text class="label" x="94" y="201" text-anchor="end">GND</text>
+
+      <path class="wire" d="M102 80 H150" />
+      <path class="wire" d="M210 80 H262" />
+      <path class="wire" d="M296 80 H404 V196 H102" />
+      <circle class="node" cx="102" cy="80" r="4.5" />
+      <circle class="node" cx="102" cy="196" r="4.5" />
+
+      <path class="flow" d="M122 72 l7 8 -7 8" />
+      <path class="flow" d="M396 132 l8 7 8 -7" />
+      <path class="flow" d="M172 188 l-7 8 7 8" />
+      <text class="label label--flow" x="196" y="219" text-anchor="middle">CURRENT</text>
+
+      <path class="wire" d="M150 80 L156 66 L166 94 L176 66 L186 94 L196 66 L204 80 H210" />
+      <text class="label" x="180" y="124" text-anchor="middle">RESISTOR</text>
+
+      <path class="led" d="M262 60 V100 L296 80 Z" />
+      <path class="wire" d="M296 60 V100" />
+      <path class="glow" d="M276 52 l11 -15 M281 37 h6 v6" />
+      <path class="glow" d="M290 56 l11 -15 M295 41 h6 v6" />
+      <text class="label" x="279" y="124" text-anchor="middle">LED</text>
+
+      <text class="label" x="255" y="156" text-anchor="middle">OHM'S LAW</text>
+      <text class="formula" x="255" y="182" text-anchor="middle">V = I × R</text>
+    </svg>
+  </div>
+  <figcaption>
+    <span class="annot">Diagram</span>
+    <span>A basic LED circuit. Current flows from the Arduino pin through the resistor and LED back to ground. The resistor keeps the current low enough that the LED doesn't burn out.</span>
+  </figcaption>
+</figure>
+
+<style>
+  .circuit {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 32rem;
+  }
+
+  .circuit__board {
+    padding: clamp(0.75rem, 3vw, 1.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    background-image: radial-gradient(circle, #d9d4c8 1.4px, transparent 1.6px);
+    background-size: 16px 16px;
+    background-position: 8px 8px;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    color: var(--color-text);
+  }
+
+  .block {
+    fill: var(--color-surface);
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .wire {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  .node {
+    fill: currentColor;
+  }
+
+  .led {
+    fill: var(--brand-yellow);
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+
+  .glow {
+    fill: none;
+    stroke: var(--brand-blue);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .flow {
+    fill: none;
+    stroke: var(--brand-blue);
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    fill: var(--color-text-muted);
+  }
+
+  .label--strong {
+    fill: var(--color-text);
+  }
+
+  .label--flow {
+    fill: var(--brand-blue);
+  }
+
+  .formula {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 500;
+    fill: var(--color-text);
+  }
+
+  figcaption {
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+</style>

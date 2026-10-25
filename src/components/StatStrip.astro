@@ -1,0 +1,102 @@
+---
+import { impact, inPersonCourse } from "../data/site";
+---
+
+<section class="stats" aria-labelledby="stats-heading">
+  <h2 id="stats-heading" class="visually-hidden">RoboZone in numbers</h2>
+  <div class="stats__group">
+    <p class="annot">{impact.scope}</p>
+    <dl class="stats__list">
+      {
+        impact.items.map((item) => (
+          <div class="stats__item">
+            <dt>{item.label}</dt>
+            <dd>{item.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+  <div class="stats__group stats__group--course">
+    <p class="annot">In-person course</p>
+    <dl class="stats__list">
+      <div class="stats__item">
+        <dt>weeks per course</dt>
+        <dd>{inPersonCourse.weeks}</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .stats {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    gap: var(--space-5) var(--space-6);
+    padding-block: var(--space-6);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .stats__group {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .stats__group--course {
+    padding-left: var(--space-6);
+    border-left: 1px solid var(--color-border);
+  }
+
+  .stats__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: var(--space-4) var(--space-5);
+  }
+
+  .stats__item {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-1);
+  }
+
+  .stats__item dd {
+    font-size: clamp(2.25rem, 1.7rem + 2.2vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stats__item dt {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  @media (max-width: 48rem) {
+    .stats {
+      grid-template-columns: 1fr;
+    }
+
+    .stats__group--course {
+      padding-left: 0;
+      padding-top: var(--space-5);
+      border-left: 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .stats__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 26rem) {
+    .stats__item dd {
+      font-size: 2rem;
+    }
+
+    .stats__item dt {
+      font-size: var(--text-sm);
+    }
+  }
+</style>

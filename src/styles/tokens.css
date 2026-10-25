@@ -1,0 +1,88 @@
+:root {
+  color-scheme: light;
+
+  --brand-sky: #27a9ff;
+  --brand-sky-end: #69b3e8;
+  --brand-gradient: linear-gradient(135deg, var(--brand-sky), var(--brand-sky-end));
+  --brand-sky-tint: #ddf2ff;
+  --brand-blue: #0b5fbf;
+  --brand-blue-deep: #0a4f9e;
+  --brand-yellow: #ffd253;
+  --ink-black: #111316;
+
+  --color-bg: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #eeebe3;
+  --color-text: #1b1f23;
+  --color-text-muted: #4a5058;
+  --color-border: #dad5ca;
+  --color-border-strong: #8a8478;
+  --color-link: var(--brand-blue);
+  --color-link-hover: var(--brand-blue-deep);
+  --color-action: var(--brand-blue);
+  --color-action-hover: var(--brand-blue-deep);
+  --color-on-action: #ffffff;
+  --color-focus: var(--brand-blue);
+  --color-error: #b3261e;
+  --color-error-bg: #fcedec;
+  --color-success: #1e6b3a;
+  --color-success-bg: #e8f4ec;
+  --color-notice-bg: #fff6d6;
+
+  --color-dark-bg: #15181b;
+  --color-dark-surface: #1f2327;
+  --color-dark-text: #f3f1ec;
+  --color-dark-muted: #b4bac2;
+  --color-dark-border: #343a40;
+  --color-dark-link: var(--brand-sky);
+
+  --font-sans: "DM Sans Variable", "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-display: "Signwood", var(--font-sans);
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --text-xl: clamp(1.25rem, 1.12rem + 0.6vw, 1.625rem);
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.5vw, 2.75rem);
+  --text-3xl: clamp(2.25rem, 1.6rem + 3vw, 4.25rem);
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.25;
+  --leading-body: 1.6;
+  --tracking-tight: -0.025em;
+  --tracking-label: 0.06em;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --section-y: clamp(3.5rem, 2.5rem + 4vw, 6.5rem);
+
+  --container: 1200px;
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2rem);
+  --measure: 66ch;
+  --header-height: 4rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 2px rgb(27 31 35 / 0.06);
+  --shadow-md: 0 1px 2px rgb(27 31 35 / 0.05), 0 8px 24px rgb(27 31 35 / 0.07);
+  --shadow-press: 3px 3px 0 var(--ink-black);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --duration: 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration: 0ms;
+  }
+}

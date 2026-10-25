@@ -1,0 +1,214 @@
+---
+import Icon from "./Icon.astro";
+import ProgramStatus from "./ProgramStatus.astro";
+import CourseFacts from "./CourseFacts.astro";
+import { offerings, sessions, mailto, site } from "../data/site";
+import { allAvailability } from "../lib/programs";
+import { todayISO } from "../lib/registration";
+
+interface Props {
+  variant?: "home" | "index";
+}
+
+const { variant = "home" } = Astro.props;
+const a = allAvailability(offerings, sessions, todayISO());
+const local = a.inPerson;
+const exploring = [a.online, a.branches];
+const isIndex = variant === "index";
+---
+
+<div class:list={["ways", `ways--${variant}`]}>
+  <article class="ways__primary" id={isIndex ? undefined : "course"} aria-labelledby={`ways-inperson-${variant}`}>
+    <div class="ways__main">
+      <ProgramStatus availability={local} />
+      <h3 id={`ways-inperson-${variant}`}>
+        {local.offering.name}
+        <span class="ways__place">{site.originShort}</span>
+      </h3>
+      <p>{local.offering.summary}</p>
+      <div class="ways__actions">
+        {
+          local.registrable ? (
+            <a class="btn btn--primary" href="/signup#in-person">
+              Register for {local.registrable.name}
+            </a>
+          ) : (
+            <a class="btn btn--secondary" href={isIndex ? "#in-person" : local.offering.href}>
+              Course details <Icon name={isIndex ? "arrow-down" : "arrow-right"} />
+            </a>
+          )
+        }
+        {
+          !local.registrable && (
+            <a class="link-arrow" href={mailto(local.offering.inquiry.subject)}>
+              <Icon name="mail" /> {local.offering.inquiry.label}
+            </a>
+          )
+        }
+      </div>
+    </div>
+    {
+      !isIndex && (
+        <div class="ways__facts">
+          <CourseFacts compact />
+        </div>
+      )
+    }
+  </article>
+
+  <div class="ways__explore">
+    {
+      exploring.map((item) => (
+        <article class="ways__idea" aria-labelledby={`ways-${item.offering.id}-${variant}`}>
+          <ProgramStatus availability={item} />
+          <h3 id={`ways-${item.offering.id}-${variant}`}>{item.offering.name}</h3>
+          <p>{item.offering.summary}</p>
+          {item.offering.highlights && (
+            <ul role="list" class="ways__highlights" aria-label="Decided so far">
+              {item.offering.highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          )}
+          {item.offering.openQuestions && <p class="ways__open">{item.offering.openQuestions}</p>}
+          <div class="ways__actions ways__actions--stack">
+            {item.registrable ? (
+              <a class="btn btn--primary" href={`/signup#${item.offering.id}`}>
+                Register for {item.registrable.name}
+              </a>
+            ) : (
+              <a class="link-arrow" href={isIndex ? `#${item.offering.id}` : item.offering.href}>
+                {isIndex ? "What we're exploring" : "Read the proposed direction"}
+                <Icon name={isIndex ? "arrow-down" : "arrow-right"} />
+              </a>
+            )}
+            <a class="link-arrow" href={mailto(item.offering.inquiry.subject)}>
+              <Icon name="mail" /> {item.offering.inquiry.label}
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .ways {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .ways__primary {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-text);
+    border-radius: var(--radius-lg);
+  }
+
+  .ways__main {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    justify-items: start;
+  }
+
+  .ways h3 {
+    font-size: var(--text-xl);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .ways__place {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .ways__main > p,
+  .ways__idea > p {
+    color: var(--color-text-muted);
+    max-width: 38rem;
+  }
+
+  .ways__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+    margin-top: var(--space-1);
+  }
+
+  .ways__actions .btn {
+    white-space: normal;
+  }
+
+  .ways__actions--stack {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .ways__explore {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  .ways__idea {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    justify-items: start;
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    background: transparent;
+    border: 1.5px dashed var(--color-border-strong);
+    border-radius: var(--radius-lg);
+  }
+
+  .ways__idea h3 {
+    font-size: 1.1875rem;
+  }
+
+  .ways__open {
+    font-size: var(--text-sm);
+  }
+
+  .ways__highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .ways__highlights li {
+    padding: 0.2rem 0.55rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+  }
+
+  @media (min-width: 64rem) {
+    .ways--home .ways__primary {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .ways__explore {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

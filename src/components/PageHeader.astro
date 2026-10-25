@@ -1,0 +1,51 @@
+---
+interface Props {
+  label?: string;
+  title: string;
+  lede?: string;
+}
+
+const { label, title, lede } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="container page-header__inner">
+    <div class="page-header__text">
+      {label && <p class="annot">{label}</p>}
+      <h1>{title}</h1>
+      {lede && <p class="lede">{lede}</p>}
+      <slot />
+    </div>
+    {Astro.slots.has("aside") && <div class="page-header__aside"><slot name="aside" /></div>}
+  </div>
+</header>
+
+<style>
+  .page-header {
+    padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem) clamp(2rem, 1rem + 3vw, 4rem);
+  }
+
+  .page-header__inner {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .page-header__text {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    max-width: 44rem;
+  }
+
+  .page-header h1 {
+    font-size: clamp(2.25rem, 1.7rem + 2.6vw, 3.75rem);
+  }
+
+  @media (min-width: 64rem) {
+    .page-header__inner:has(.page-header__aside) {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: var(--space-8);
+      align-items: start;
+    }
+  }
+</style>

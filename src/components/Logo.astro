@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/brand/logo-padded.png";
+
+interface Props {
+  size?: "md" | "lg";
+  tone?: "light" | "dark";
+}
+
+const { size = "md", tone = "light" } = Astro.props;
+const px = size === "lg" ? 44 : 36;
+---
+
+<a href="/" class:list={["logo", `logo--${size}`, `logo--${tone}`]}>
+  <Image src={logo} alt="" width={px} height={px} densities={[1, 2]} loading="eager" class="logo__mark" />
+  <span class="logo__word">RoboZone</span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    text-decoration: none;
+    color: var(--color-text);
+    flex: none;
+  }
+
+  .logo:hover {
+    color: var(--color-text);
+  }
+
+  .logo__mark {
+    flex: none;
+  }
+
+  .logo__word {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.375rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    padding-top: 0.08em;
+    text-shadow: 2px 2px 0 var(--brand-sky);
+  }
+
+  .logo--lg .logo__word {
+    font-size: 1.75rem;
+  }
+
+  @media (max-width: 30rem) {
+    .logo__word {
+      font-size: 1.125rem;
+    }
+  }
+
+  @media (max-width: 23rem) {
+    .logo:not(.logo--dark) .logo__word {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+  }
+
+  .logo.logo--dark,
+  .logo.logo--dark:hover {
+    color: var(--color-dark-text);
+  }
+
+  .logo--dark .logo__word {
+    text-shadow: 2px 2px 0 #0b5fbf;
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import { inPersonCourse, offerings, sessions } from "../data/site";
+import { availabilityFor } from "../lib/programs";
+import { gradeRange, todayISO } from "../lib/registration";
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+const current = availabilityFor(offerings["in-person"], sessions, todayISO());
+const session = ["open", "upcoming", "full"].includes(current.state) ? current.session : null;
+const f = inPersonCourse.facts;
+
+const rows = [
+  {
+    term: "Grades",
+    value: session?.grades?.length ? gradeRange(session.grades) : f.audience,
+    note: session?.grades?.length ? undefined : f.audienceNote,
+  },
+  { term: "Experience", value: f.experience, note: f.experienceNote },
+  { term: "Format", value: f.format, note: session?.schedule ?? f.formatNote },
+  ...(session?.dates ? [{ term: "Dates", value: session.dates, note: undefined }] : []),
+  {
+    term: "Where",
+    value: session?.location ?? f.venue,
+    note: session?.location ? undefined : f.venueNote,
+  },
+  { term: "Cost", value: session?.fee ?? f.cost, note: f.costNote },
+];
+
+const shown = compact ? rows.filter((r) => ["Grades", "Experience", "Format", "Where"].includes(r.term)) : rows;
+---
+
+<dl class:list={["facts", { "facts--compact": compact }]}>
+  {
+    shown.map((row) => (
+      <div>
+        <dt>{row.term}</dt>
+        <dd>
+          {row.value}
+          {row.note && !compact && <small>{row.note}</small>}
+        </dd>
+      </div>
+    ))
+  }
+</dl>

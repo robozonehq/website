@@ -1,0 +1,301 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+import ProgramStatus from "../components/ProgramStatus.astro";
+import WorkshopPhoto from "../components/WorkshopPhoto.astro";
+import { site, links, fiscalSponsor, mailto, offerings, sessions } from "../data/site";
+import { allAvailability } from "../lib/programs";
+import { todayISO } from "../lib/registration";
+
+const a = allAvailability(offerings, sessions, todayISO());
+---
+
+<Layout
+  title="Get involved | RoboZone"
+  description="Mentor at RoboZone's in-person workshops, host workshops near South Brunswick, talk with us about a program in your community, or donate through RoboZone's fiscal sponsor, Hack Club."
+>
+  <PageHeader
+    label="Get involved"
+    title="Help younger students build their first robots"
+    lede="Mentor, host workshops, talk with us about a program in your community, or donate. Each path starts with an email or a link on this page."
+  >
+    <p class="enroll-note">
+      Looking for classes for a student instead? <a href="/signup">See program availability and updates</a>.
+    </p>
+  </PageHeader>
+
+  <div class="container">
+    <nav class="jump" aria-label="On this page">
+      <a href="#mentor">Mentor</a>
+      <a href="#partner">Host or partner</a>
+      <a href="#support">Donate</a>
+    </nav>
+  </div>
+
+  <section class="section path" id="mentor" aria-labelledby="mentor-heading">
+    <div class="container path__inner">
+      <div class="path__head">
+        <p class="annot">Mentor</p>
+        <h2 id="mentor-heading">Mentor at our in-person workshops</h2>
+        <WorkshopPhoto
+          class="path__photo"
+          photo="mentorCode"
+          aspect="4 / 3"
+          sizes="(min-width: 64rem) 400px, 100vw"
+          widths={[400, 600, 800, 1200]}
+        />
+      </div>
+      <div class="path__body stack">
+        <p>
+          Our mentoring happens at our in-person workshops in South Brunswick. Mentors work with students while they
+          build: helping them find what's wrong when something doesn't work, and explaining the idea behind it. Our
+          mentors are high school students.
+        </p>
+        <h3>What mentors help with</h3>
+        <ul class="ticks" role="list">
+          <li><Icon name="check" />Wiring breadboard circuits and tracking down loose or misplaced connections</li>
+          <li><Icon name="check" />Explaining voltage, current, resistance, and Ohm's law</li>
+          <li><Icon name="check" />Reading and fixing Arduino code in C++</li>
+          <li><Icon name="check" />Servo circuits, CAD in Onshape, and 3D-printed project parts</li>
+        </ul>
+        <p class="muted">
+          We'll talk through the schedule and what a session involves before you commit. The next in-person session
+          hasn't been scheduled yet, so this would be for a future session.
+        </p>
+        <div class="later">
+          <ProgramStatus availability={a.online} />
+          <p>
+            <strong>Mentoring online workshops</strong> isn't possible yet because they haven't launched. When they do,
+            mentors will help in supervised group sessions with simulated circuits, code, CAD models, and project
+            explanations, after an orientation and a practice lesson. If you're interested, say so in your email.
+          </p>
+        </div>
+        <div class="path__action">
+          <a class="btn btn--primary" href={mailto("Mentoring with RoboZone")}>
+            <Icon name="mail" /> Email us about mentoring
+          </a>
+          <p class="muted small">Tell us your school, grade, and what you'd like to help with.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section path" id="partner" aria-labelledby="partner-heading">
+    <div class="container path__inner">
+      <div class="path__head">
+        <p class="annot">Host or partner</p>
+        <h2 id="partner-heading">Host workshops, or talk about a program in your community</h2>
+      </div>
+      <div class="path__body">
+        <div class="option">
+          <h3>Near South Brunswick: host in-person workshops</h3>
+          <p>
+            If you run a school program, library, community organization, or local business near South Brunswick and
+            could host workshops, help us reach families, or work with us another way, we'd like to hear from you. Since our
+            first session, our workshops have been held at Code Ninjas in Kendall Park.
+          </p>
+          <a class="btn btn--secondary" href={mailto("Hosting RoboZone workshops near South Brunswick")}>
+            <Icon name="mail" /> Email us about hosting
+          </a>
+        </div>
+
+        <div class="option option--idea">
+          <ProgramStatus availability={a.branches} />
+          <h3>Somewhere else: discuss a local program</h3>
+          <p>
+            We're exploring local branches: groups in other communities running workshops with RoboZone's teaching
+            approach. No other branches exist yet, and there's no application process, funding, or starter kit. If
+            you'd like to bring hands-on robotics to your community, we're glad to talk about what might be possible.
+          </p>
+          <p class="muted small">
+            Hosting workshops doesn't make an organization a RoboZone branch, and RoboZone's fiscal sponsorship doesn't
+            extend to partner organizations.
+          </p>
+          <a class="btn btn--secondary" href={mailto(offerings.branches.inquiry.subject)}>
+            <Icon name="mail" /> {offerings.branches.inquiry.label}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section path path--support" id="support" aria-labelledby="support-heading">
+    <div class="container path__inner">
+      <div class="path__head">
+        <p class="annot">Donate</p>
+        <h2 id="support-heading">Support RoboZone</h2>
+      </div>
+      <div class="path__body stack">
+        <p>
+          {fiscalSponsor.statement} Donations are made on HCB, Hack Club's platform for the projects it sponsors.
+        </p>
+        <div class="path__action path__action--row">
+          <a class="btn btn--primary" href={links.donate} rel="noopener">
+            Donate on HCB <Icon name="external" /><span class="visually-hidden"> (opens HCB)</span>
+          </a>
+        </div>
+        <p class="muted small">
+          The donate button opens RoboZone's donation page on HCB. Questions about a donation? Email
+          <a href={mailto("Donating to RoboZone")}>{site.email}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .enroll-note {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding-bottom: var(--space-5);
+  }
+
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    border: 1.5px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .jump a:hover {
+    border-color: var(--color-text);
+    background: var(--color-surface-sunken);
+  }
+
+  .path {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .path--support {
+    background: var(--brand-sky-tint);
+    border-top-color: #b7dcf5;
+  }
+
+  .path__inner {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .path__head :global(.path__photo) {
+    margin-top: var(--space-4);
+    max-width: 26rem;
+  }
+
+  .path__head {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+
+  .path__body {
+    max-width: var(--measure);
+  }
+
+  .path__body h3 {
+    font-size: 1.125rem;
+    margin-top: var(--space-6);
+  }
+
+  .later {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    border: 1.5px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+  }
+
+  .later p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .option {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+    max-width: var(--measure);
+  }
+
+  .option + .option {
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
+    border-top: 2px dashed var(--color-border-strong);
+  }
+
+  .option h3 {
+    font-size: 1.125rem;
+  }
+
+  .option p:not(.small) {
+    color: var(--color-text);
+  }
+
+  .option .btn {
+    white-space: normal;
+    margin-top: var(--space-2);
+  }
+
+  .ticks {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .ticks li {
+    display: grid;
+    grid-template-columns: 1.25rem 1fr;
+    gap: var(--space-3);
+    align-items: start;
+  }
+
+  .ticks svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.2em;
+    color: var(--brand-blue);
+  }
+
+  .path__action {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+    margin-top: var(--space-6);
+  }
+
+  .path__action--row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-4);
+  }
+
+  .path__action .btn {
+    white-space: normal;
+  }
+
+  .small {
+    font-size: var(--text-sm);
+  }
+
+  .path--support .muted {
+    color: #3d4248;
+  }
+
+  @media (min-width: 64rem) {
+    .path__inner {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+      gap: var(--space-8);
+    }
+  }
+</style>

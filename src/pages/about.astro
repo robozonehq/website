@@ -1,0 +1,371 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+import WorkshopPhoto from "../components/WorkshopPhoto.astro";
+import TeamGrid from "../components/TeamGrid.astro";
+import SessionTimeline from "../components/SessionTimeline.astro";
+import ProgramStatus from "../components/ProgramStatus.astro";
+import { site, impact, inPersonCourse, fiscalSponsor, links, offerings, sessions } from "../data/site";
+import { allAvailability } from "../lib/programs";
+import { todayISO } from "../lib/registration";
+
+const a = allAvailability(offerings, sessions, todayISO());
+---
+
+<Layout
+  title="About RoboZone | RoboZone"
+  description="Why RoboZone started, how it teaches, and the high school students who run it. A student-led robotics education initiative founded in South Brunswick, New Jersey, fiscally sponsored by Hack Club."
+>
+  <PageHeader
+    label="About"
+    title="A student-led place to start with robotics"
+    lede={`RoboZone is a robotics education initiative run by high school students. It started in ${site.origin} in ${site.founded}.`}
+  />
+
+  <section class="section section--tight" aria-labelledby="story-heading">
+    <div class="container story">
+      <div class="story__text">
+        <h2 id="story-heading">Why we started</h2>
+        <div class="stack measure">
+          <p>
+            RoboZone's founders learned robotics, electronics, and programming mostly on their own. Without structured
+            guidance or someone to ask, that was difficult.
+          </p>
+          <p>
+            They started RoboZone so younger students would have a better place to begin: a clear sequence of
+            lessons, real parts on the table, and mentors close enough to ask when a circuit or a program doesn't work.
+          </p>
+        </div>
+      </div>
+      <WorkshopPhoto
+        photo="mentorsWatching"
+        aspect="4 / 3"
+        sizes="(min-width: 64rem) 560px, 100vw"
+        widths={[480, 800, 1200, 1600]}
+      />
+    </div>
+  </section>
+
+  <section class="section section--sunken" aria-labelledby="approach-heading">
+    <div class="container">
+      <div class="section-head">
+        <p class="annot">How we teach</p>
+        <h2 id="approach-heading">Hands on, in small groups, with help nearby</h2>
+      </div>
+      <dl class="approach">
+        <div>
+          <dt>Real hardware from the start</dt>
+          <dd>Students build with breadboards, electronic components, and Arduino boards, and write the code that runs them.</dd>
+        </div>
+        <div>
+          <dt>One skill at a time</dt>
+          <dd>
+            Our in-person course moves from circuits to code, then to motors and CAD, and ends with a final project.
+            See the <a href="/program#curriculum">full curriculum</a>.
+          </dd>
+        </div>
+        <div>
+          <dt>Near-peer mentors</dt>
+          <dd>Our mentors are high school students, not much older than the students they teach.</dd>
+        </div>
+        <div>
+          <dt>Mistakes are expected</dt>
+          <dd>Debugging a circuit or a program is part of learning how it works, so students are encouraged to ask.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="sofar-heading">
+    <div class="container sofar">
+      <div class="section-head sofar__head">
+        <p class="annot">So far</p>
+        <h2 id="sofar-heading">What RoboZone has done since {site.founded}</h2>
+        <p>
+          These are totals from our in-person workshops in South Brunswick since RoboZone started, not the size of one
+          session. Each in-person course runs {inPersonCourse.weeks} weeks.
+        </p>
+      </div>
+      <dl class="sofar__list">
+        {
+          impact.items.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <div class="history">
+        <h3 class="history__title">Where we've taught</h3>
+        <p class="muted history__intro">
+          Our very first session was held in a garage. Since then, our workshops have been held at Code Ninjas in Kendall Park. Here are photos from a few past sessions.
+        </p>
+        <SessionTimeline />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sunken" id="direction" aria-labelledby="direction-heading">
+    <div class="container">
+      <div class="section-head">
+        <p class="annot">Now and next</p>
+        <h2 id="direction-heading">Where RoboZone is headed</h2>
+        <p>
+          We'd like more students to have the kind of start our workshops give, including students far from South
+          Brunswick. Here's what exists today and what we're exploring.
+        </p>
+      </div>
+      <div class="direction">
+        <div class="direction__now">
+          <h3>Today</h3>
+          <ProgramStatus availability={a.inPerson} />
+          <p>
+            Our in-person course in South Brunswick is established: it's what RoboZone has taught since {site.founded}.
+            {a.inPerson.registrable ? "" : " The next session hasn't been scheduled yet."}
+          </p>
+          <a class="link-arrow" href="/signup">Program updates <Icon name="arrow-right" /></a>
+        </div>
+        <div class="direction__next">
+          <h3>Being explored</h3>
+          {
+            [a.online, a.branches].map((item) => (
+              <div class="direction__idea">
+                <ProgramStatus availability={item} />
+                <p>
+                  <strong>{item.offering.name}.</strong> {item.offering.summary}
+                </p>
+              </div>
+            ))
+          }
+          <p class="muted">Neither has launched, and no dates, locations, or new leadership roles have been set.</p>
+          <a class="link-arrow" href="/program#online">More about these ideas <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="team" aria-labelledby="team-heading">
+    <div class="container">
+      <div class="section-head">
+        <p class="annot">The team</p>
+        <h2 id="team-heading">The students who started RoboZone</h2>
+        <p>RoboZone's four co-founders share the role of co-president and organize its sessions.</p>
+      </div>
+      <TeamGrid bios />
+    </div>
+  </section>
+
+  <section class="section section--sunken" id="organization" aria-labelledby="org-heading">
+    <div class="container org">
+      <div class="stack measure">
+        <p class="annot">How RoboZone is organized</p>
+        <h2 id="org-heading">Fiscal sponsorship</h2>
+        <p>
+          {fiscalSponsor.statement} RoboZone doesn't hold its own nonprofit registration; donations go through HCB,
+          Hack Club's platform for the projects it sponsors.
+        </p>
+        <p>
+          This sponsorship covers RoboZone itself. If RoboZone grows into other communities, it wouldn't automatically
+          extend to partner organizations or future branches.
+        </p>
+      </div>
+      <div class="org__links">
+        <a class="btn btn--secondary" href={links.donate} rel="noopener">
+          Donate on HCB <Icon name="external" /><span class="visually-hidden"> (opens HCB)</span>
+        </a>
+        <a class="link-arrow" href="/get-involved#support">Ways to support RoboZone <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .section--tight {
+    padding-top: 0;
+  }
+
+  .story {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .story__text {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  @media (min-width: 64rem) {
+    .story {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-8);
+      align-items: center;
+    }
+  }
+
+  .approach {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--space-7);
+    border-top: 2px solid var(--color-text);
+  }
+
+  .approach > div {
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .approach dt {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-2);
+  }
+
+  .approach dd {
+    color: var(--color-text-muted);
+    max-width: 34rem;
+  }
+
+  @media (max-width: 44rem) {
+    .approach {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sofar__head {
+    margin-bottom: var(--space-6);
+  }
+
+  .sofar__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-block: 1px solid var(--color-border);
+  }
+
+  .sofar__list > div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-1);
+    padding: var(--space-5) var(--space-5) var(--space-5) 0;
+  }
+
+  .sofar__list > div + div {
+    padding-left: var(--space-5);
+    border-left: 1px solid var(--color-border);
+  }
+
+  .sofar__list dd {
+    font-size: clamp(2.25rem, 1.7rem + 2.2vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .sofar__list dt {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .history {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  .history__title {
+    font-size: var(--text-xl);
+  }
+
+  .history__intro {
+    max-width: var(--measure);
+    margin-bottom: var(--space-5);
+  }
+
+  @media (max-width: 34rem) {
+    .sofar__list > div,
+    .sofar__list > div + div {
+      padding-inline: var(--space-3);
+    }
+
+    .sofar__list > div:first-child {
+      padding-left: 0;
+    }
+
+    .sofar__list dt {
+      font-size: var(--text-sm);
+    }
+  }
+
+  .direction {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .direction__now,
+  .direction__next {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    justify-items: start;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border-radius: var(--radius-lg);
+  }
+
+  .direction__now {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-text);
+  }
+
+  .direction__next {
+    border: 1.5px dashed var(--color-border-strong);
+  }
+
+  .direction h3 {
+    font-size: var(--text-xl);
+  }
+
+  .direction__idea {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .direction__idea p,
+  .direction__now p {
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 64rem) {
+    .direction {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    }
+  }
+
+  .org {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .org__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  @media (min-width: 64rem) {
+    .org {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      align-items: end;
+      gap: var(--space-8);
+    }
+
+    .org__links {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

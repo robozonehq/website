@@ -7,25 +7,26 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node --experimental-strip-types --no-warnings --test \"tests/*.test.ts\"",
+    "check:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
     "@astrojs/node": "^8.2.5",
-    "@esbuild/linux-x64": "0.19.12",
-    "@fontsource-variable/commissioner": "^5.0.19",
     "@fontsource-variable/dm-sans": "^5.1.0",
-    "@fontsource/commissioner": "^5.0.19",
-    "@fontsource/dm-sans": "^5.1.0",
-    "@rollup/rollup-linux-x64-gnu": "4.14.2",
-    "@rollup/rollup-linux-x64-musl": "4.14.2",
+    "@fontsource/dm-mono": "^5.0.20",
     "astro": "^4.6.1",
     "bare-events": "^2.2.0",
     "bare-fs": "^2.1.1",
     "bare-path": "^2.1.0",
     "http-proxy-middleware": "^3.0.0",
     "pocketbase": "^0.21.2",
-    "scroll-snap": "^4.0.5",
     "typescript": "^5.4.5"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "0.19.12",
+    "@rollup/rollup-linux-x64-gnu": "4.14.2",
+    "@rollup/rollup-linux-x64-musl": "4.14.2"
   }
 }

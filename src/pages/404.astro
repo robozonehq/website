@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<Layout title="Page not found | RoboZone" description="This page doesn't exist." noindex>
+  <section class="section">
+    <div class="container notfound">
+      <p class="annot">404</p>
+      <h1>This page isn't wired up</h1>
+      <p class="lede">The link may be old, or the address may have a typo. These pages might help:</p>
+      <ul role="list" class="notfound__links">
+        <li><a class="link-arrow" href="/">Home <Icon name="arrow-right" /></a></li>
+        <li><a class="link-arrow" href="/program">Programs <Icon name="arrow-right" /></a></li>
+        <li><a class="link-arrow" href="/signup">Program updates <Icon name="arrow-right" /></a></li>
+        <li><a class="link-arrow" href="/get-involved">Get involved <Icon name="arrow-right" /></a></li>
+      </ul>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .notfound {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    min-height: 40vh;
+    align-content: center;
+  }
+
+  .notfound h1 {
+    font-size: clamp(2.25rem, 1.7rem + 2.6vw, 3.75rem);
+  }
+
+  .notfound__links {
+    display: grid;
+    gap: var(--space-1);
+  }
+</style>
